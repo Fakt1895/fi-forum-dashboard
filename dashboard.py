@@ -310,7 +310,7 @@ def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
 
     # Prepare display data
     display_cols = [
-        'author', 'text', 'source', 'sentiment', 'category', 'severity', 'summary'
+        'author', 'text', 'source', 'sentiment', 'summary', 'url'
     ]
 
     available_cols = [col for col in display_cols if col in analyzed_df.columns]
@@ -319,6 +319,12 @@ def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
     # Truncate text for display
     if 'text' in display_df.columns:
         display_df['text'] = display_df['text'].str.slice(0, 100) + "..."
+
+    # Format URLs as clickable links
+    if 'url' in display_df.columns:
+        display_df['url'] = display_df['url'].apply(
+            lambda x: f"[Link ↗]({x})" if x and str(x).startswith('http') else x
+        )
 
     # Filter options
     col1, col2, col3 = st.columns(3)

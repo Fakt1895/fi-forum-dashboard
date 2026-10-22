@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 DEMO_MENTIONS = [
     {
         'id': '1', 'text': 'FI-Forum: PPS-IKS, Standardisierung, Prozessoptimierung sind die Kernthemen. Sehr relevant für unsere Infrastruktur.',
-        'author': 'Carsten Gierke', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Carsten Gierke', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789012345678/',
         'followers': 3400, 'verified': True, 'likes': 234, 'retweets': 87,
         'created_at': datetime(2026, 10, 21, 10, 15).isoformat(),
         'category': 'Fachliches Feedback', 'sentiment': 'positive', 'severity': 'info',
@@ -20,7 +20,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '2', 'text': 'Zahlungsverkehr ist im Wandel: SEPA, Instant Payments, Wero, digitaler Euro, PSD3 - Das FI-Forum adressiert genau die richtigen Themen.',
-        'author': 'Markus Nenninger', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Markus Nenninger', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789012345679/',
         'followers': 2100, 'verified': True, 'likes': 189, 'retweets': 67,
         'created_at': datetime(2026, 10, 21, 11, 30).isoformat(),
         'category': 'Fachliches Feedback', 'sentiment': 'neutral', 'severity': 'info',
@@ -29,7 +29,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '3', 'text': 'Automatisierung ja, aber KI ist nur Teil des Ganzen. Wir müssen holistisch denken. Großartiger Input vom FI-Forum.',
-        'author': 'Simon Vielreicher', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Simon Vielreicher', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789012345680/',
         'followers': 1800, 'verified': True, 'likes': 312, 'retweets': 145,
         'created_at': datetime(2026, 10, 21, 12, 45).isoformat(),
         'category': 'Fachliches Feedback', 'sentiment': 'positive', 'severity': 'info',
@@ -38,7 +38,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '4', 'text': 'Stand 29 vorgestellt, Masterclass am 3.11. wird sehr interessant. Die technische Tiefe beim FI-Forum ist beeindruckend.',
-        'author': 'Steffen Hawranek', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Steffen Hawranek', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 2300, 'verified': True, 'likes': 267, 'retweets': 98,
         'created_at': datetime(2026, 10, 21, 13, 15).isoformat(),
         'category': 'Positive Anerkennung', 'sentiment': 'positive', 'severity': 'info',
@@ -47,7 +47,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '5', 'text': 'KI in der Managementunterstützung - aber zu viel „Manufaktur" noch in den Prozessen. Das FI-Forum zeigt den Weg.',
-        'author': 'Olaf Blomberg', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Olaf Blomberg', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 1600, 'verified': False, 'likes': 198, 'retweets': 71,
         'created_at': datetime(2026, 10, 21, 14, 20).isoformat(),
         'category': 'Fachliches Feedback', 'sentiment': 'positive', 'severity': 'info',
@@ -56,7 +56,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '6', 'text': 'Sparkassen Innovation Hub mit 6 Masterclasses zum Thema digitale Kundenschnittstelle. Genau was die Branche braucht! 🚀',
-        'author': 'Sparkassen Innovation Hub', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Sparkassen Innovation Hub', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 8900, 'verified': True, 'likes': 845, 'retweets': 456,
         'created_at': datetime(2026, 10, 21, 15, 0).isoformat(),
         'category': 'Positive Anerkennung', 'sentiment': 'positive', 'severity': 'info',
@@ -65,7 +65,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '7', 'text': '"Familientreffen" der Banking-Elite! KI, Digitalisierung und echte Transformation live erleben. Das FI-Forum ist essentiell.',
-        'author': 'Dirk Staffeldt', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Dirk Staffeldt', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 4200, 'verified': True, 'likes': 678, 'retweets': 234,
         'created_at': datetime(2026, 10, 20, 10, 45).isoformat(),
         'category': 'Positive Anerkennung', 'sentiment': 'positive', 'severity': 'info',
@@ -74,7 +74,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '8', 'text': 'Finfluencer-Event am Vorabend (2.11.) wird legendär. Netzworking auf Top-Level mit den Entscheidern der Branche!',
-        'author': 'Julian Prüfer', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Julian Prüfer', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 3100, 'verified': True, 'likes': 512, 'retweets': 167,
         'created_at': datetime(2026, 10, 20, 11, 30).isoformat(),
         'category': 'Positive Anerkennung', 'sentiment': 'positive', 'severity': 'info',
@@ -83,7 +83,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '9', 'text': 'Ich freue mich auf die Gespräche beim FI-Forum. Besonders zu Digitalisierungsstrategien und neuen Technologien.',
-        'author': 'Ingo Garczorz', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Ingo Garczorz', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 2700, 'verified': True, 'likes': 289, 'retweets': 95,
         'created_at': datetime(2026, 10, 20, 12, 15).isoformat(),
         'category': 'Positive Anerkennung', 'sentiment': 'positive', 'severity': 'info',
@@ -92,7 +92,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '10', 'text': 'KI-Prozesse in Markt/Marktfolge und Aufsichtsrecht stehen im Fokus. Fantastisch, dass diese Themen beim FI-Forum adressiert werden!',
-        'author': 'Michael Günnigmann', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Michael Günnigmann', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 1900, 'verified': True, 'likes': 156, 'retweets': 67,
         'created_at': datetime(2026, 10, 20, 13, 45).isoformat(),
         'category': 'Fachliches Feedback', 'sentiment': 'positive', 'severity': 'info',
@@ -101,7 +101,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '11', 'text': 'Prozessautomatisierung nach FI-Standard mit Camunda. Das ist die Zukunft. Großartiger Content beim FI-Forum!',
-        'author': 'Michael Dohmen', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Michael Dohmen', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 2200, 'verified': True, 'likes': 423, 'retweets': 178,
         'created_at': datetime(2026, 10, 20, 14, 30).isoformat(),
         'category': 'Fachliches Feedback', 'sentiment': 'positive', 'severity': 'info',
@@ -110,7 +110,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '12', 'text': 'Berliner Sparkasse: Buchungschaos bei Visa-Transaktionen. Das ist frustrierend und sollte nicht sein. #Banking #UX',
-        'author': 'Oleksandr Tsyba', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Oleksandr Tsyba', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 890, 'verified': False, 'likes': 67, 'retweets': 45,
         'created_at': datetime(2026, 10, 19, 9, 15).isoformat(),
         'category': 'Kritik an Infrastruktur', 'sentiment': 'negative', 'severity': 'warning',
@@ -119,7 +119,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '13', 'text': 'Bitcoin in der Sparkassen-App? Die Unternehmen sind noch nicht bereit für Krypto-Integration. Zu kontrovers noch.',
-        'author': 'crypto_deutschland', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'crypto_deutschland', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 1200, 'verified': False, 'likes': 234, 'retweets': 89,
         'created_at': datetime(2026, 10, 19, 10, 45).isoformat(),
         'category': 'Kritik an Innovation-Tempo', 'sentiment': 'mixed', 'severity': 'info',
@@ -128,7 +128,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '14', 'text': 'Genos & Sparkassen gewinnen trotz Neobanken Marktanteile. Der Grund: Vertrauen und echte Digitalisierung! #FI-Forum',
-        'author': 'David Peters', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'David Peters', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 5600, 'verified': True, 'likes': 678, 'retweets': 289,
         'created_at': datetime(2026, 10, 7, 8, 30).isoformat(),
         'category': 'Positive Anerkennung', 'sentiment': 'positive', 'severity': 'info',
@@ -137,7 +137,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '15', 'text': 'Erfolg in Banking ist „unspektakulär" - keine Wunder-Technologie nötig. Kontinuierliche Verbesserung mit bewährten Tools.',
-        'author': 'Matthias Mocha', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Matthias Mocha', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 1400, 'verified': False, 'likes': 178, 'retweets': 56,
         'created_at': datetime(2026, 10, 7, 9, 45).isoformat(),
         'category': 'Fachliches Feedback', 'sentiment': 'neutral', 'severity': 'info',
@@ -155,7 +155,7 @@ DEMO_MENTIONS = [
     },
     {
         'id': '17', 'text': 'Aus Trends werden Prototypen, an einem Tag: Wir laden ein zum Vibe Coding Ideathon 🎪💡 - 4. November 2026 Frankfurt Messe @FI-Forum',
-        'author': 'Marius Sturm', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'author': 'Marius Sturm', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7123456789999999999/',
         'followers': 5000, 'verified': True, 'likes': 72, 'retweets': 25,
         'created_at': datetime(2026, 10, 22, 13, 45).isoformat(),
         'category': 'Event Highlight', 'sentiment': 'positive', 'severity': 'info',
