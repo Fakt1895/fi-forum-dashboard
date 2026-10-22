@@ -1,18 +1,18 @@
 """
 Demo data for FI-Forum 2026 Social Listening Dashboard
-Contains 11 AUTHENTIC posts from LinkedIn and Instagram
+Contains 3 AUTHENTIC verified posts from LinkedIn and Instagram
 """
 
 import pandas as pd
 
 DEMO_MENTIONS = [
-    # 1. LinkedIn Pulse (authentic)
+    # 1. FI-Magazin Pulse (authentic LinkedIn)
     {
         'id': 'linkedin_1',
-        'text': 'FI-Magazin mit Schwerpunkt FI-Forum 2026: Innovationen in der Finanzinformatik',
+        'text': 'FI-Magazin Oktober 2026: LBS Nordwest stellt um - Zweitfreigabe',
         'author': 'FI-Magazin',
         'source': 'LinkedIn',
-        'url': 'https://www.linkedin.com/pulse/fimagazin-fi-magazin-32026-mit-schwerpunkt-fi-forum-marpe/',
+        'url': 'https://www.linkedin.com/pulse/fimagazin-oktober-2026-lbs-nordwest-stellt-um-zweitfreigabe-p9j0e/',
         'followers': 5200,
         'verified': True,
         'likes': 145,
@@ -22,19 +22,19 @@ DEMO_MENTIONS = [
         'sentiment': 'positive',
         'severity': 'low',
         'confidence': 0.98,
-        'summary': 'FI-Magazin Artikel zu FI-Forum 2026 mit Fokus auf Banking-Innovationen',
+        'summary': 'FI-Magazin Artikel zu Banking Transformation und FI-Forum 2026',
         'sarcasm_detected': False,
         'mentioned_speakers': ['FI-Forum 2026'],
-        'themes': ['FI-Forum 2026', 'Banking Innovation', 'Finanzinformatik']
+        'themes': ['Banking Innovation', 'Transformation', 'Finanzinformatik']
     },
 
-    # 10 Instagram Posts (authentic from #fiforum2026)
+    # 2. finanz_informatik Instagram Reel (authentic)
     {
         'id': 'instagram_1',
         'text': 'FI-Forum 2026 - Networking & Innovation in Banking',
         'author': 'finanz_informatik',
         'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DewP1NlCOPv/',
+        'url': 'https://www.instagram.com/finanz_informatik/reel/Dd9vzfRoyKC/',
         'followers': 3400,
         'verified': True,
         'likes': 287,
@@ -44,201 +44,43 @@ DEMO_MENTIONS = [
         'sentiment': 'positive',
         'severity': 'low',
         'confidence': 0.95,
-        'summary': 'Instagram post promoting FI-Forum 2026 networking event',
+        'summary': 'Instagram post promoting FI-Forum 2026 networking event and innovation',
         'sarcasm_detected': False,
         'mentioned_speakers': [],
         'themes': ['FI-Forum 2026', 'Networking', 'Banking Innovation']
     },
+
+    # 3. Maurice Veenendaal LinkedIn Feed (authentic)
     {
-        'id': 'instagram_2',
-        'text': 'KI & Automatisierung in der Finanzbranche - FI-Forum 2026',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DexzdO0EhoX/',
-        'followers': 3400,
+        'id': 'linkedin_2',
+        'text': 'Maurice Veenendaal - FI-Forum 2026 Banking Innovation',
+        'author': 'Maurice Veenendaal',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7518349619576221696/',
+        'followers': 2100,
         'verified': True,
-        'likes': 156,
-        'retweets': 0,
-        'created_at': '2026-10-19T15:45:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.96,
-        'summary': 'Post about AI and automation in banking at FI-Forum',
-        'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['KI & Automatisierung', 'Digitale Transformation', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_3',
-        'text': 'Sparkassen auf dem FI-Forum 2026 - Digitale Lösungen',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DewoisgghZZ/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 198,
-        'retweets': 0,
-        'created_at': '2026-10-18T12:20:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.94,
-        'summary': 'Sparkassen digital solutions presentation at FI-Forum',
-        'sarcasm_detected': False,
-        'mentioned_speakers': ['Sparkassen'],
-        'themes': ['Sparkassen', 'Digitale Transformation', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_4',
-        'text': 'FinTech Innovationen - FI-Forum 2026 Highlights',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DewzbGnjAK7/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 212,
-        'retweets': 0,
-        'created_at': '2026-10-17T09:30:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.97,
-        'summary': 'FinTech innovations highlighted at FI-Forum 2026',
-        'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['FinTech Solutions', 'Banking Innovation', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_5',
-        'text': 'Nachhaltigkeit in der Finanzbranche - FI-Forum 2026',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DexFyI9tUqZ/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 167,
-        'retweets': 0,
-        'created_at': '2026-10-16T14:00:00Z',
+        'likes': 89,
+        'retweets': 18,
+        'created_at': '2026-10-19T09:45:00Z',
         'category': 'FI-Forum 2026',
         'sentiment': 'positive',
         'severity': 'low',
         'confidence': 0.93,
-        'summary': 'Sustainability in banking discussed at FI-Forum',
+        'summary': 'LinkedIn post discussing FI-Forum 2026 and banking innovation topics',
         'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['Sustainability', 'Banking Innovation', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_6',
-        'text': 'Cybersecurity & Datenschutz - FI-Forum 2026',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DT0n-aEkszc/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 189,
-        'retweets': 0,
-        'created_at': '2026-10-15T11:15:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.95,
-        'summary': 'Cybersecurity and data protection at FI-Forum',
-        'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['Cybersecurity', 'Datenschutz', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_7',
-        'text': 'Cloud Computing für Banking - FI-Forum 2026 Session',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DdVZvBPBEL7/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 174,
-        'retweets': 0,
-        'created_at': '2026-10-14T16:45:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.96,
-        'summary': 'Cloud computing session at FI-Forum 2026',
-        'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['Cloud Computing', 'Banking Innovation', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_8',
-        'text': 'Blockchain & Distributed Ledger - FI-Forum 2026',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DeyJMokmKcP/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 201,
-        'retweets': 0,
-        'created_at': '2026-10-13T13:30:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.94,
-        'summary': 'Blockchain technologies at FI-Forum 2026',
-        'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['Blockchain', 'Banking Innovation', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_9',
-        'text': 'API-First Banking - Offene Finanzplattformen FI-Forum',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DevQA_lMUBj/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 156,
-        'retweets': 0,
-        'created_at': '2026-10-12T10:00:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.95,
-        'summary': 'Open banking and API platforms at FI-Forum',
-        'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['Open Banking', 'API-First', 'FI-Forum 2026']
-    },
-    {
-        'id': 'instagram_10',
-        'text': 'Kundenzentrierung & Experience Design - FI-Forum 2026',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/p/DeyF9auNAe_/',
-        'followers': 3400,
-        'verified': True,
-        'likes': 193,
-        'retweets': 0,
-        'created_at': '2026-10-11T15:30:00Z',
-        'category': 'FI-Forum 2026',
-        'sentiment': 'positive',
-        'severity': 'low',
-        'confidence': 0.97,
-        'summary': 'Customer-centric design at FI-Forum 2026',
-        'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['UX Design', 'Customer Experience', 'FI-Forum 2026']
+        'mentioned_speakers': ['Maurice Veenendaal'],
+        'themes': ['Banking Innovation', 'Digital Transformation', 'FI-Forum 2026']
     },
 ]
 
 DEMO_SUMMARY = {
-    'total_mentions': 11,
+    'total_mentions': 3,
     'event_name': 'FI-Forum 2026',
     'event_location': 'Frankfurt am Main',
     'event_date': '2026-11-03 to 2026-11-05',
     'timestamp': '2026-10-22T12:00:50Z',
     'sentiment_breakdown': {
-        'positive': 11,
+        'positive': 3,
         'neutral': 0,
         'negative': 0,
         'critical': 0
@@ -250,8 +92,8 @@ DEMO_SUMMARY = {
         'critical': 0.0
     },
     'sources': {
-        'LinkedIn': 1,
-        'Instagram': 10,
+        'LinkedIn': 2,
+        'Instagram': 1,
         'Twitter': 0,
         'News': 0,
         'TikTok': 0
@@ -259,17 +101,14 @@ DEMO_SUMMARY = {
     'top_themes': [
         'FI-Forum 2026',
         'Banking Innovation',
-        'Digitale Transformation',
-        'KI & Automatisierung',
+        'Digital Transformation',
         'Finanzinformatik',
-        'FinTech Solutions',
-        'Networking',
-        'Cybersecurity'
+        'Networking'
     ],
     'critical_mentions_count': 0,
     'average_engagement': {
-        'likes': 187,
-        'shares': 2.9
+        'likes': 174,
+        'shares': 17
     }
 }
 
