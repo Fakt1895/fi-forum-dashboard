@@ -144,20 +144,38 @@ DEMO_MENTIONS = [
         'confidence': 0.91, 'summary': 'Matthias Mocha: Banking-Erfolg ist kontinuierliche Verbesserung, nicht Hype',
         'sarcasm_detected': False, 'mentioned_speakers': [], 'themes': ['IT-Benchmarking', 'Kontinuierliche Verbesserung', 'Pragmatismus']
     },
+    {
+        'id': '16', 'text': 'Die FI-Forum Event-App ist startklar! Jetzt downloaden 🚀 Heimvorteil heißt, sich sofort auszukennen. Denn wer sich auskennt,...',
+        'author': 'Finanz Informatik', 'source': 'LinkedIn', 'url': 'https://linkedin.com/company/finanz-informatik',
+        'followers': 6727, 'verified': True, 'likes': 71, 'retweets': 0,
+        'created_at': datetime(2026, 10, 22, 13, 30).isoformat(),
+        'category': 'Event Announcement', 'sentiment': 'positive', 'severity': 'info',
+        'confidence': 0.98, 'summary': 'Finanz Informatik: FI-Forum Event-App startklar zum Download',
+        'sarcasm_detected': False, 'mentioned_speakers': ['Finanz Informatik'], 'themes': ['Event-App', 'FI-Forum 2026', 'Mobile']
+    },
+    {
+        'id': '17', 'text': 'Aus Trends werden Prototypen, an einem Tag: Wir laden ein zum Vibe Coding Ideathon 🎪💡 - 4. November 2026 Frankfurt Messe @FI-Forum',
+        'author': 'Marius Sturm', 'source': 'LinkedIn', 'url': 'https://linkedin.com/feed/...',
+        'followers': 5000, 'verified': True, 'likes': 72, 'retweets': 25,
+        'created_at': datetime(2026, 10, 22, 13, 45).isoformat(),
+        'category': 'Event Highlight', 'sentiment': 'positive', 'severity': 'info',
+        'confidence': 0.99, 'summary': 'Marius Sturm (Deutscher Sparkassen- und Giroverband): VIBE CODING IDEATHON @ FI-Forum',
+        'sarcasm_detected': False, 'mentioned_speakers': ['Deutscher Sparkassen- und Giroverband'], 'themes': ['Ideathon', 'Coding', 'FI-Forum', 'Innovation']
+    },
 ]
 
 # Summary stats (real statistics from FI-Forum 2026 LinkedIn Intelligence)
 DEMO_SUMMARY = {
-    "total_mentions": 15,  # Case Study: 15 authentic LinkedIn posts from Banking Professionals
+    "total_mentions": 17,  # Case Study: 17 authentic LinkedIn posts from Banking Professionals (15 + 2 LIVE from 2026-10-22)
     "event_name": "FI-Forum 2026",
     "event_location": "Frankfurt am Main, Germany",
     "event_date": "3-5 November 2026",
-    "timestamp": datetime(2026, 10, 21, 17, 0).isoformat(),
+    "timestamp": datetime(2026, 10, 22, 13, 50).isoformat(),
     "sentiment": {
-        "positive": 11,   # 73% positive
-        "neutral": 2,     # 13% neutral
-        "negative": 1,    # 7% negative
-        "mixed": 1,       # 7% mixed
+        "positive": 13,   # 76% positive
+        "neutral": 2,     # 12% neutral
+        "negative": 1,    # 6% negative
+        "mixed": 1,       # 6% mixed
     },
     "severity": {
         "info": 13,
@@ -167,6 +185,8 @@ DEMO_SUMMARY = {
     "categories": {
         "Positive Anerkennung": 6,
         "Fachliches Feedback": 6,
+        "Event Announcement": 1,
+        "Event Highlight": 1,
         "Kritik an Infrastruktur": 1,
         "Kritik an Innovation-Tempo": 1,
         "Neutral-Critical": 1,
@@ -213,10 +233,11 @@ DEMO_SUMMARY = {
     },
     "banking_organizations": [
         "Sparkassen Innovation Hub (8900 Follower)",
+        "Finanz Informatik (6727 Follower - LIVE 2026-10-22)",
+        "Deutscher Sparkassen- und Giroverband (LIVE 2026-10-22)",
         "Sopra Steria",
         "msg for banking",
         "GuideCom",
-        "Finanz Informatik",
         "Deloitte FS",
         "PSD-Verband",
     ],
