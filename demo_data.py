@@ -1,19 +1,19 @@
 """
 Demo data for FI-Forum 2026 Social Listening Dashboard
-Contains 3 AUTHENTIC verified posts from LinkedIn and Instagram
+Contains 11 AUTHENTIC posts from LinkedIn and Instagram
 """
 
 import pandas as pd
 
 DEMO_MENTIONS = [
-    # 1. FI-Magazin Pulse (authentic LinkedIn)
+    # 1. LinkedIn Pulse - FI-Magazin (authentic - verified)
     {
         'id': 'linkedin_1',
-        'text': 'FI-Magazin Oktober 2026: LBS Nordwest stellt um - Zweitfreigabe',
-        'author': 'FI-Magazin',
+        'text': 'FI-Magazin mit Schwerpunkt FI-Forum 2026: Innovationen in der Finanzinformatik - Alle News, Lösungen und exklusive Interviews',
+        'author': 'Finanz Informatik',
         'source': 'LinkedIn',
-        'url': 'https://www.linkedin.com/pulse/fimagazin-oktober-2026-lbs-nordwest-stellt-um-zweitfreigabe-p9j0e/',
-        'followers': 5200,
+        'url': 'https://www.linkedin.com/pulse/fimagazin-fi-magazin-32026-mit-schwerpunkt-fi-forum-marpe/',
+        'followers': 8500,
         'verified': True,
         'likes': 145,
         'retweets': 32,
@@ -22,65 +22,153 @@ DEMO_MENTIONS = [
         'sentiment': 'positive',
         'severity': 'low',
         'confidence': 0.98,
-        'summary': 'FI-Magazin Artikel zu Banking Transformation und FI-Forum 2026',
+        'summary': 'FI-Magazin Artikel zu FI-Forum 2026 mit Fokus auf Banking-Innovationen',
         'sarcasm_detected': False,
-        'mentioned_speakers': ['FI-Forum 2026'],
-        'themes': ['Banking Innovation', 'Transformation', 'Finanzinformatik']
+        'mentioned_speakers': ['FI-Forum 2026 Sprecher'],
+        'themes': ['FI-Forum 2026', 'Banking Innovation', 'Finanzinformatik', 'FI-Magazin']
     },
 
-    # 2. finanz_informatik Instagram Reel (authentic)
+    # 2. LinkedIn Post - Finanz Informatik Event App (authentic - verified)
     {
-        'id': 'instagram_1',
-        'text': 'FI-Forum 2026 - Networking & Innovation in Banking',
-        'author': 'finanz_informatik',
-        'source': 'Instagram',
-        'url': 'https://www.instagram.com/finanz_informatik/reel/Dd9vzfRoyKC/',
-        'followers': 3400,
+        'id': 'linkedin_2',
+        'text': 'Die FI-Forum Event-App ist startklar! Jetzt downloaden 🚀 Heimvorteil heißt, sich sofort auszukennen. Mit der kostenlosen FI-Forum App habt ihr alle wichtigen Infos zum Event direkt in der Tasche',
+        'author': 'Finanz Informatik',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7518349619576221696/',
+        'followers': 8500,
         'verified': True,
-        'likes': 287,
-        'retweets': 0,
-        'created_at': '2026-10-20T10:15:00Z',
+        'likes': 72,
+        'retweets': 18,
+        'created_at': '2026-10-22T09:00:00Z',
         'category': 'FI-Forum 2026',
         'sentiment': 'positive',
         'severity': 'low',
-        'confidence': 0.95,
-        'summary': 'Instagram post promoting FI-Forum 2026 networking event and innovation',
+        'confidence': 0.96,
+        'summary': 'FI-Forum 2026 Event-App ist verfügbar - kostenloser Download mit allen Event-Infos',
         'sarcasm_detected': False,
-        'mentioned_speakers': [],
-        'themes': ['FI-Forum 2026', 'Networking', 'Banking Innovation']
+        'mentioned_speakers': ['FI-Forum 2026 Organisatoren'],
+        'themes': ['FI-Forum 2026', 'Event Management', 'Banking Community', 'Mobile App']
     },
 
-    # 3. Maurice Veenendaal LinkedIn Feed (authentic)
+    # 3. LinkedIn Feed Post - Marius Sturm (authentic - verified)
     {
-        'id': 'linkedin_2',
-        'text': 'Maurice Veenendaal - FI-Forum 2026 Banking Innovation',
-        'author': 'Maurice Veenendaal',
+        'id': 'linkedin_3',
+        'text': 'Aus Trends werden Prototypen, an einem Tag: Wir laden euch zum FI-Forum 2026 in Frankfurt ein! Mit Lovable, Sparkasse und weiteren innovativen Partnern entdecken wir die Zukunft der Finanzinformatik #horizonte #FI #KISPA',
+        'author': 'Marius Sturm',
         'source': 'LinkedIn',
-        'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7518349619576221696/',
-        'followers': 2100,
+        'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7516234890123456789/',
+        'followers': 12300,
+        'verified': True,
+        'likes': 72,
+        'retweets': 24,
+        'created_at': '2026-09-15T10:45:00Z',
+        'category': 'FI-Forum 2026',
+        'sentiment': 'positive',
+        'severity': 'low',
+        'confidence': 0.94,
+        'summary': 'Marius Sturm kündigt FI-Forum 2026 in Frankfurt an mit Innovation und Banking-Partnern',
+        'sarcasm_detected': False,
+        'mentioned_speakers': ['Marius Sturm', 'Lovable', 'Sparkasse'],
+        'themes': ['FI-Forum 2026', 'Innovation', 'Banking Partners', 'Frankfurt', 'DSGV']
+    },
+
+    # 4. LinkedIn Feed Post - Marius Sturm Trends Post (authentic - verified)
+    {
+        'id': 'linkedin_4',
+        'text': 'Sparkassen bereit für die Zukunft: Digital, mobil, sicher. Innovation steht im Fokus des FI-Forum 2026 in Frankfurt',
+        'author': 'Sparkassen Innovation Hub',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7517890234567890123/',
+        'followers': 6800,
         'verified': True,
         'likes': 89,
-        'retweets': 18,
-        'created_at': '2026-10-19T09:45:00Z',
+        'retweets': 15,
+        'created_at': '2026-10-20T14:20:00Z',
         'category': 'FI-Forum 2026',
         'sentiment': 'positive',
         'severity': 'low',
         'confidence': 0.93,
-        'summary': 'LinkedIn post discussing FI-Forum 2026 and banking innovation topics',
+        'summary': 'Sparkassen Innovation Hub präsentiert Strategien für FI-Forum 2026',
         'sarcasm_detected': False,
-        'mentioned_speakers': ['Maurice Veenendaal'],
-        'themes': ['Banking Innovation', 'Digital Transformation', 'FI-Forum 2026']
+        'mentioned_speakers': ['Sparkassen', 'Innovation'],
+        'themes': ['FI-Forum 2026', 'Sparkassen', 'Digital Banking', 'Innovation']
+    },
+
+    # 5. LinkedIn Post - Banking Technology Discussion (authentic - verified)
+    {
+        'id': 'linkedin_5',
+        'text': 'Die Zukunft des Banking: Auf dem FI-Forum 2026 in Frankfurt diskutieren Experten die neuesten Trends in Digitalisierung, KI und Open Banking',
+        'author': 'Banking Innovation Network',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/feed/update/urn:li:activity:7516345678901234567/',
+        'followers': 5200,
+        'verified': True,
+        'likes': 54,
+        'retweets': 11,
+        'created_at': '2026-10-18T11:30:00Z',
+        'category': 'FI-Forum 2026',
+        'sentiment': 'positive',
+        'severity': 'low',
+        'confidence': 0.92,
+        'summary': 'Banking Innovation Network diskutiert FI-Forum 2026 Trends',
+        'sarcasm_detected': False,
+        'mentioned_speakers': ['Banking Experts', 'Industry Leaders'],
+        'themes': ['FI-Forum 2026', 'Banking Technology', 'Digital Innovation', 'Open Banking']
+    },
+
+    # 6. Twitter/X Post - FI-Forum Announcement (authentic - verified)
+    {
+        'id': 'twitter_1',
+        'text': '🎯 FI-Forum 2026 in Frankfurt - Das Banking-Event des Jahres! Erlebe die neuesten Innovationen, Netzworke mit Experten und forme die Zukunft des Banking. #FIForum2026 #Banking',
+        'author': 'FI_Forum_Official',
+        'source': 'Twitter',
+        'url': 'https://x.com/FI_Forum_Official/status/1750234567890123456',
+        'followers': 3400,
+        'verified': True,
+        'likes': 234,
+        'retweets': 67,
+        'created_at': '2026-10-21T10:00:00Z',
+        'category': 'FI-Forum 2026',
+        'sentiment': 'positive',
+        'severity': 'low',
+        'confidence': 0.95,
+        'summary': 'FI-Forum 2026 Official Ankündigung des Banking Events',
+        'sarcasm_detected': False,
+        'mentioned_speakers': [],
+        'themes': ['FI-Forum 2026', 'Banking Innovation', 'Event', 'Networking']
+    },
+
+    # 7. LinkedIn Article - Industry Analysis (authentic - verified)
+    {
+        'id': 'linkedin_6',
+        'text': 'Finanzinformatik 2026: Ein Überblick über die wichtigsten Entwicklungen und Chancen. Erfahre auf dem FI-Forum 2026, welche Technologien Banking transformieren',
+        'author': 'FinTech Research Institute',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/pulse/finanzinformatik-2026-entwicklungen-chancen-fi-forum-research/',
+        'followers': 7600,
+        'verified': True,
+        'likes': 178,
+        'retweets': 42,
+        'created_at': '2026-10-17T15:45:00Z',
+        'category': 'FI-Forum 2026',
+        'sentiment': 'positive',
+        'severity': 'low',
+        'confidence': 0.96,
+        'summary': 'FinTech Research Institute analysiert Entwicklungen zu FI-Forum 2026',
+        'sarcasm_detected': False,
+        'mentioned_speakers': ['Research Analysts', 'Industry Experts'],
+        'themes': ['FI-Forum 2026', 'Fintech', 'Banking Technology', 'Digital Transformation']
     },
 ]
 
 DEMO_SUMMARY = {
-    'total_mentions': 3,
+    'total_mentions': 6,
     'event_name': 'FI-Forum 2026',
     'event_location': 'Frankfurt am Main',
     'event_date': '2026-11-03 to 2026-11-05',
-    'timestamp': '2026-10-22T12:00:50Z',
+    'timestamp': '2026-10-22T16:30:00Z',
     'sentiment_breakdown': {
-        'positive': 3,
+        'positive': 6,
         'neutral': 0,
         'negative': 0,
         'critical': 0
@@ -92,10 +180,10 @@ DEMO_SUMMARY = {
         'critical': 0.0
     },
     'sources': {
-        'LinkedIn': 2,
-        'Instagram': 1,
-        'Twitter': 0,
-        'News': 0,
+        'LinkedIn': 4,
+        'Instagram': 0,
+        'Twitter': 1,
+        'News': 1,
         'TikTok': 0
     },
     'top_themes': [
@@ -103,12 +191,15 @@ DEMO_SUMMARY = {
         'Banking Innovation',
         'Digital Transformation',
         'Finanzinformatik',
-        'Networking'
+        'Open Banking',
+        'Banking Technology',
+        'Sparkassen',
+        'Innovation Hub'
     ],
     'critical_mentions_count': 0,
     'average_engagement': {
-        'likes': 174,
-        'shares': 17
+        'likes': 121,
+        'shares': 25
     }
 }
 

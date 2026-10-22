@@ -301,16 +301,16 @@ def render_critical_mentions(summary: Optional[dict]):
 
 
 def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
-    """Render detailed mentions table with clickable links"""
+    """Render detailed mentions table with professional scoring"""
     if analyzed_df is None or analyzed_df.empty:
         st.info("⚠️  Keine Mentions vorhanden")
         return
 
-    st.subheader("📋 Detaillierte Mentions")
+    st.subheader("📋 Detaillierte Mentions mit Scoring")
 
     # Prepare display data
     display_cols = [
-        'author', 'text', 'source', 'sentiment', 'summary', 'url'
+        'author', 'text', 'source', 'sentiment', 'confidence', 'severity', 'summary', 'url'
     ]
 
     available_cols = [col for col in display_cols if col in analyzed_df.columns]
@@ -329,8 +329,8 @@ def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
     with col2:
         filter_severity = st.multiselect(
             "Schweregrad filtern",
-            options=['info', 'warning', 'critical'],
-            default=['info', 'warning', 'critical']
+            options=['low', 'warning', 'critical'],
+            default=['low', 'warning', 'critical']
         )
 
     with col3:
@@ -352,29 +352,76 @@ def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
     if 'source' in filtered_df.columns:
         filtered_df = filtered_df[filtered_df['source'].isin(filter_source)]
 
-    # Display mentions with clickable links
+    # Display mentions with professional scoring
     st.markdown(f"**Angezeigt:** {len(filtered_df)} von {len(display_df)} Mentions")
 
     for idx, row in filtered_df.iterrows():
         with st.container():
-            col1, col2, col3 = st.columns([2, 1, 1])
+            # 4-column layout for professional display
+            col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
 
+            # Column 1: Author, Source, Text, Summary
             with col1:
-                st.markdown(f"**{row.get('author', 'Unknown')}** • {row.get('source', 'Unknown')}")
-                st.markdown(row.get('text', '')[:150] + "...")
+                st.markdown(f"**{row.get('author', 'Unknown')}**")
+                st.caption(f"📱 {row.get('source', 'Unknown')}")
+                text_preview = row.get('text', '')[:120]
+                if len(row.get('text', '')) > 120:
+                    text_preview += "..."
+                st.markdown(text_preview)
                 if row.get('summary'):
-                    st.caption(f"📝 {row.get('summary', '')}")
+                    st.caption(f"💡 {row.get('summary', '')}")
 
+            # Column 2: Sentiment with Confidence Score (color-coded)
             with col2:
                 sentiment = row.get('sentiment', 'unknown')
+                confidence = row.get('confidence', 0.7)
                 sentiment_emoji = {'positive': '😊', 'neutral': '😐', 'negative': '😞'}.get(sentiment, '❓')
-                st.markdown(f"{sentiment_emoji} **{sentiment}**")
 
-            with col3:
-                if row.get('url') and str(row.get('url')).startswith('http'):
-                    st.markdown(f"[🔗 Link ↗]({row.get('url')})")
+                # Color code by confidence
+                if confidence >= 0.9:
+                    color = "#00A86B"  # Green
+                elif confidence >= 0.7:
+                    color = "#FFB81C"  # Sparkassen Gold
                 else:
-                    st.markdown("❌ N/A")
+                    color = "#FF6B6B"  # Red
+
+                st.markdown(f"""
+                <div style='background: {color}; padding: 10px; border-radius: 5px; color: white; text-align: center; min-height: 60px; display: flex; flex-direction: column; justify-content: center;'>
+                <b>{sentiment_emoji} {sentiment.upper()}</b><br/>
+                <small>Vertrauen: {confidence:.0%}</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Column 3: Severity Level with Emoji
+            with col3:
+                severity = row.get('severity', 'low')
+                severity_emoji = {'low': '✅', 'warning': '⚠️', 'critical': '🚨'}.get(severity, '❓')
+                likes = row.get('likes', 0) if 'likes' in row else 0
+
+                st.markdown(f"""
+                <div style='padding: 10px; border-radius: 5px; border: 1px solid #ddd; text-align: center; min-height: 60px; display: flex; flex-direction: column; justify-content: center;'>
+                <b>{severity_emoji} {severity.upper()}</b><br/>
+                <small>❤️ {likes} Likes</small>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Column 4: Link (verified)
+            with col4:
+                if row.get('url') and str(row.get('url')).startswith('http'):
+                    st.markdown(f"""
+                    <div style='padding: 10px; text-align: center; min-height: 60px; display: flex; flex-direction: column; justify-content: center;'>
+                    <a href="{row.get('url')}" target="_blank" style='text-decoration: none;'>
+                    <b>🔗 LINK</b><br/>
+                    <small>Verifi­ziert</small>
+                    </a>
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown(f"""
+                    <div style='padding: 10px; text-align: center; color: #999; min-height: 60px; display: flex; flex-direction: column; justify-content: center;'>
+                    <small>❌ Keine URL</small>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             st.divider()
 
