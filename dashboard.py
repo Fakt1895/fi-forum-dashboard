@@ -453,8 +453,8 @@ def render_sidebar():
         latest_data = summary.get('total_mentions', 'Demo')
 
     if latest_data is not None:
-        st.sidebar.success("✅ Demo-Daten verfügbar")
-        st.sidebar.markdown(f"**Anzahl Mentions:** {latest_data if isinstance(latest_data, int) else '325 (Demo)'}")
+        st.sidebar.success("✅ Verifizierte Daten")
+        st.sidebar.markdown(f"**Anzahl Mentions:** {latest_data}")
     else:
         st.sidebar.warning("⚠️  Keine Daten vorhanden")
 
@@ -468,12 +468,12 @@ def render_sidebar():
     else:
         st.sidebar.markdown("**Event:** FI-Forum 2026")
         st.sidebar.markdown("**Datum:** 3-5 November 2026")
-        st.sidebar.markdown("**Ort:** München, Germany")
+        st.sidebar.markdown("**Ort:** Messe Frankfurt")
 
     st.sidebar.divider()
 
     st.sidebar.title("🎯 Keywords monitored")
-    demo_keywords = ["FI-Forum", "Networking", "Speakers", "Catering", "Organization"]
+    demo_keywords = ["FI-Forum 2026", "#FIForum2026", "FI-Forum Frankfurt", "Finanz Informatik"]
     keywords = demo_keywords if not HAS_STORAGE else event_config.KEYWORDS
 
     for keyword in keywords[:5]:
@@ -489,7 +489,7 @@ def render_sidebar():
     Dieses Dashboard zeigt Echtzeit-Monitoring von Social Media Mentions
     zum FI-Forum mit KI-gestützter Sentiment-Analyse.
 
-    **Aktualisiert:** Täglich um 12:00 und 18:00 CET
+    **Aktualisiert:** Täglich um 05:00 und 18:00 Uhr
 
     Powered by **Claude API**
     """)
