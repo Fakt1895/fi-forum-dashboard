@@ -301,7 +301,7 @@ def render_critical_mentions(summary: Optional[dict]):
 
 
 def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
-    """Render detailed mentions table"""
+    """Render detailed mentions table with clickable links"""
     if analyzed_df is None or analyzed_df.empty:
         st.info("⚠️  Keine Mentions vorhanden")
         return
@@ -315,16 +315,6 @@ def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
 
     available_cols = [col for col in display_cols if col in analyzed_df.columns]
     display_df = analyzed_df[available_cols].copy()
-
-    # Truncate text for display
-    if 'text' in display_df.columns:
-        display_df['text'] = display_df['text'].str.slice(0, 100) + "..."
-
-    # Format URLs as clickable links
-    if 'url' in display_df.columns:
-        display_df['url'] = display_df['url'].apply(
-            lambda x: f"[Link ↗]({x})" if x and str(x).startswith('http') else x
-        )
 
     # Filter options
     col1, col2, col3 = st.columns(3)
@@ -362,14 +352,31 @@ def render_mentions_table(analyzed_df: Optional[pd.DataFrame]):
     if 'source' in filtered_df.columns:
         filtered_df = filtered_df[filtered_df['source'].isin(filter_source)]
 
-    # Display table
-    st.dataframe(
-        filtered_df,
-        use_container_width=True,
-        height=400
-    )
-
+    # Display mentions with clickable links
     st.markdown(f"**Angezeigt:** {len(filtered_df)} von {len(display_df)} Mentions")
+
+    for idx, row in filtered_df.iterrows():
+        with st.container():
+            col1, col2, col3 = st.columns([2, 1, 1])
+
+            with col1:
+                st.markdown(f"**{row.get('author', 'Unknown')}** • {row.get('source', 'Unknown')}")
+                st.markdown(row.get('text', '')[:150] + "...")
+                if row.get('summary'):
+                    st.caption(f"📝 {row.get('summary', '')}")
+
+            with col2:
+                sentiment = row.get('sentiment', 'unknown')
+                sentiment_emoji = {'positive': '😊', 'neutral': '😐', 'negative': '😞'}.get(sentiment, '❓')
+                st.markdown(f"{sentiment_emoji} **{sentiment}**")
+
+            with col3:
+                if row.get('url') and str(row.get('url')).startswith('http'):
+                    st.markdown(f"[🔗 Link ↗]({row.get('url')})")
+                else:
+                    st.markdown("❌ N/A")
+
+            st.divider()
 
 
 def render_sidebar():
