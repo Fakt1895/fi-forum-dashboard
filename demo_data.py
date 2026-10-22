@@ -3,6 +3,8 @@ Demo data for FI-Forum 2026 Social Listening Dashboard
 Contains 11 AUTHENTIC posts from LinkedIn and Instagram
 """
 
+import pandas as pd
+
 DEMO_MENTIONS = [
     # 1. LinkedIn Pulse (authentic)
     {
@@ -273,4 +275,5 @@ DEMO_SUMMARY = {
 
 def get_demo_data():
     """Return demo data for dashboard"""
-    return DEMO_MENTIONS, DEMO_SUMMARY
+    df = pd.DataFrame(DEMO_MENTIONS)
+    return df, DEMO_SUMMARY
