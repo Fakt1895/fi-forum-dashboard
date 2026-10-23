@@ -10,7 +10,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from demo_data import get_demo_data, VERIFIED_AT
+import importlib
+import demo_data
+demo_data = importlib.reload(demo_data)  # always pick up freshly pushed data
+get_demo_data, VERIFIED_AT = demo_data.get_demo_data, demo_data.VERIFIED_AT
 
 TZ = ZoneInfo("Europe/Berlin")
 EVENT_START = date(2026, 11, 3)
