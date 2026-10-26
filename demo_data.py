@@ -12,9 +12,54 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-10-26T13:20:00Z"
+VERIFIED_AT = "2026-10-26T13:45:00Z"
 
 DEMO_MENTIONS = [
+    {
+        'id': 'li_7520416325832261632',
+        'author': 'Frank Pieper',
+        'author_title': 'Director bei Mastercard',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/frank-pieper-20a74a120_ich-werde-alle-3-tage-vor-ort-sein-freue-share-7520416325832261632-LRHU/',
+        'text': 'Ich werde alle 3 Tage vor Ort sein. Freue mich auf spannende Gespräche! (Repost von Sascha Seide: „Building Europe’s digital future together: Wie KI das Einkaufen und das Bezahlen verändert – live auf dem FI-Forum 2026 …“)',
+        'created_at': '2026-10-26T09:29:34Z',
+        'likes': 0, 'comments': 0,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.86, 'severity': 'low',
+        'summary': 'Mastercard-Director alle 3 Tage vor Ort; Thema KI im Commerce/Payment.',
+        'themes': ['Payment', 'KI', 'Networking'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7520142221078331392',
+        'author': 'Schäfer Karsten',
+        'author_title': 'Abteilungsleiter End2End MacOS und Thin Client',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/sch%C3%A4fer-karsten-769547128_meet-me-at-fi-forum-2026-vom-3-bis-5-share-7520142221078331392-XkQn/',
+        'text': 'Meet me at FI-Forum 2026! Vom 3. bis 5. November 2026 bin ich auf dem FI-Forum in der Messe Frankfurt dabei! … An zwei Ständen zeigen wir euch unsere Workplace Lösungen in der Praxis. 📍 Stand AW12 | Office_neo Workplace … 📍 Stand AW01 | Managed Service für Windows & Mac …',
+        'created_at': '2026-10-25T15:20:22Z',
+        'likes': 17, 'comments': 0,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low',
+        'summary': 'End2End-Clients-Team an Stand AW12 (Office_neo) und AW01 (Managed Service Windows/Mac).',
+        'themes': ['Modern Workplace', 'Office_neo', 'Aussteller'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7520119435362353152',
+        'author': 'Robin Wunsch',
+        'author_title': 'CEO@GuideCom AG, Co-Founder',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/robin-wunsch-8b1385289_der-entscheidende-schritt-bei-ki-ist-sie-share-7520119435362353152-dk18/',
+        'text': 'Der entscheidende Schritt bei KI ist, sie dort einzusetzen, wo sie einen echten Mehrwert schafft. … Genau das verbindet die Finanz Informatik und GuideCom seit mehr als 25 Jahren. … Mit KI eröffnet sich jetzt ein neues Kapitel dieser Zusammenarbeit. … #GuideCom #HowTomorrowWorks',
+        'created_at': '2026-10-25T13:49:50Z',
+        'likes': 88, 'comments': 0,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low',
+        'summary': 'GuideCom-CEO zu KI-Einsatz mit echtem Mehrwert und 25 Jahren Partnerschaft mit der FI.',
+        'themes': ['KI', 'Partnerschaft', 'Aussteller'],
+        'verified': True,
+    },
     {
         'id': 'li_7520466714736730112',
         'author': 'Sparkasse Mitten im Sauerland',
