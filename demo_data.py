@@ -12,9 +12,39 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-10-27T07:15:10Z"
+VERIFIED_AT = "2026-10-27T17:32:27Z"
 
 DEMO_MENTIONS = [
+    {
+        'id': 'fb_1669989667595218',
+        'author': 'Finanz Informatik',
+        'author_title': 'Unternehmensseite (Veranstalter)',
+        'source': 'Facebook',
+        'url': 'https://www.facebook.com/reel/1669989667595218',
+        'text': 'Die Vorfreude auf das FI-Forum 2026 wächst! Wer bereits 2023 dabei war, weiß: Das FI-Forum lebt von persönlichen Begegnungen … Für unser erstes Video hat uns Dr. Olaf Heinrich von der DekaBank empfangen.',
+        'created_at': '2026-06-30T14:12:00Z',
+        'likes': 7, 'comments': 0,
+        'category': 'Veranstalter-Kommunikation',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'Video-Interview mit Dr. Olaf Heinrich (DekaBank) über die Bedeutung des FI-Forums.',
+        'themes': ['Vorfreude', 'DekaBank', 'Video'],
+        'verified': True,
+    },
+    {
+        'id': 'fb_1331614375150782',
+        'author': 'Finanz Informatik',
+        'author_title': 'Unternehmensseite (Veranstalter)',
+        'source': 'Facebook',
+        'url': 'https://www.facebook.com/reel/1331614375150782',
+        'text': 'FI-Forum 2026: Die Anmeldung für die Mitarbeiter:innen der Sparkassen-Finanzgruppe ist eröffnet! … Genau deshalb trifft sich die Sparkassen-Finanzgruppe vom 3. bis 5. November 2026 in Frankfurt am Main zum FI-Forum.',
+        'created_at': '2026-06-24T13:40:00Z',
+        'likes': 3, 'comments': 0,
+        'category': 'Veranstalter-Kommunikation',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'Start der Anmeldung für Mitarbeitende der Sparkassen-Finanzgruppe; Keynotes, Masterclasses, Networking.',
+        'themes': ['Anmeldung', 'Masterclasses', 'Networking'],
+        'verified': True,
+    },
     {
         'id': 'li_7520733531245953024',
         'author': 'Banking-Partner Beratungsgesellschaft mbH',

@@ -91,6 +91,16 @@ html, body, [class*="css"], .stApp {{ font-family: 'Inter', sans-serif; }}
 .post .txt {{ color: #2B2B2B; font-size: 14.5px; line-height: 1.55; margin: 12px 0 12px; }}
 .post .meta {{ display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }}
 .pill {{ border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 600; }}
+.chtable {{ background:#fff; border:1px solid {LINE}; border-radius:14px; padding:6px 18px; margin: 4px 0 14px; }}
+.chrow {{ display:grid; grid-template-columns: 1.3fr .9fr .9fr 1.8fr; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid {LINE}; font-size:14px; }}
+.chrow:last-child {{ border-bottom:none; }}
+.chrow.off {{ opacity:.5; }}
+.chhead {{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:{MUTED}; font-weight:700; }}
+.chname {{ display:flex; align-items:center; gap:10px; font-weight:600; }}
+.chnum {{ text-align:center; font-weight:800; font-size:16px; }}
+.chhead .chnum {{ font-size:11px; font-weight:700; }}
+.chnote {{ color:{MUTED}; font-size:13px; }}
+.pill.own {{ background:#FDECEE; color:#B00510; }}
 .srcbar {{ display:flex; flex-wrap:wrap; gap:10px; margin: 4px 0 14px; }}
 .srcitem {{ display:flex; align-items:center; gap:8px; background:#fff; border:1px solid {LINE}; border-radius:999px; padding:5px 14px 5px 6px; font-size:13px; font-weight:600; color:{INK}; }}
 .srcitem.off {{ opacity:.45; }}
@@ -156,6 +166,18 @@ df, summary = get_demo_data()
 df["created_at"] = pd.to_datetime(df["created_at"], utc=True)
 df = df.sort_values("created_at", ascending=False).reset_index(drop=True)
 
+# Official channels of the organiser (Finanz Informatik) vs. external voices
+OWN_AUTHORS = {"Finanz Informatik", "finanz_informatik", "FI-Magazin Plus", "FI-Magazin"}
+df["own"] = df["author"].isin(OWN_AUTHORS)
+CHANNEL_NOTES = {
+    "LinkedIn": "FI-Unternehmensseite",
+    "Instagram": "@finanz_informatik",
+    "Facebook": "facebook.com/Finanz.Informatik",
+    "TikTok": "kein offizieller FI-Kanal",
+    "X": "@FI_FFM – seit 03/2025 inaktiv",
+    "News": "Presse &amp; Online-Medien",
+}
+
 n = len(df)
 reactions = int(df["likes"].sum())
 comments = int(df["comments"].sum())
@@ -198,11 +220,17 @@ st.markdown(f"""
 </div>
 """.replace(",", "."), unsafe_allow_html=True)
 
-src_counts = df["source"].value_counts()
-items = "".join(
-    f'<div class="srcitem{"" if src_counts.get(p, 0) else " off"}">{platform_badge(p, 24)}{p} <b>{int(src_counts.get(p, 0))}</b></div>'
-    for p in ["LinkedIn", "Instagram", "Facebook", "TikTok", "X", "News"])
-st.markdown(f'<div class="srcbar">{items}</div>', unsafe_allow_html=True)
+own_c = df[df["own"]]["source"].value_counts()
+ext_c = df[~df["own"]]["source"].value_counts()
+rows = ""
+for p in ["LinkedIn", "Instagram", "Facebook", "TikTok", "X", "News"]:
+    o, e = int(own_c.get(p, 0)), int(ext_c.get(p, 0))
+    rows += (f'<div class="chrow{"" if o + e else " off"}"><div class="chname">{platform_badge(p, 24)}<span>{p}</span></div>'
+             f'<div class="chnum">{o if p != "News" else "–"}</div><div class="chnum">{e}</div><div class="chnote">{CHANNEL_NOTES[p]}</div></div>')
+st.markdown(f'''<div class="chtable">
+  <div class="chrow chhead"><div>Plattform</div><div class="chnum">Eigene FI-Kanäle</div><div class="chnum">Externe Stimmen</div><div>Offizieller FI-Kanal</div></div>
+  {rows}
+</div>''', unsafe_allow_html=True)
 
 if critical:
     st.markdown(f'<div class="alert-bad">⚠ {critical} Beitrag/Beiträge mit Kritik oder Problemen – bitte unten prüfen.</div>', unsafe_allow_html=True)
@@ -224,7 +252,7 @@ with c1.container(border=True):
         x=[d.strftime("%d.%m.") for d in per_day["day"]], y=per_day["posts"],
         marker_color=RED, marker_line_width=0,
         hovertemplate="%{x}: %{y} Beiträge<extra></extra>"))
-    fig.update_yaxes(gridcolor=LINE, dtick=1, zeroline=False)
+    fig.update_yaxes(gridcolor=LINE, nticks=6, zeroline=False)
     fig.update_xaxes(showgrid=False, tickangle=0, nticks=8)
     st.plotly_chart(plot_base(fig), use_container_width=True, config=cfg)
 
@@ -267,7 +295,9 @@ with t2:
 
 # ---------- Feed ----------
 st.markdown('<div class="section">Alle Beiträge</div>', unsafe_allow_html=True)
-f1, f2, f3 = st.columns([1, 1, 1])
+f0, f1, f2, f3 = st.columns([1, 1, 1, 1])
+with f0:
+    own_sel = st.selectbox("Absender", ["Alle", "Eigene FI-Kanäle", "Externe Stimmen"])
 with f1:
     sent_map = {"Alle": None, "Positiv": "positive", "Neutral": "neutral", "Negativ": "negative"}
     sent_sel = st.selectbox("Stimmung", list(sent_map.keys()))
@@ -277,6 +307,8 @@ with f3:
     sort_sel = st.selectbox("Sortierung", ["Neueste zuerst", "Meiste Reaktionen"])
 
 view = df.copy()
+if own_sel != "Alle":
+    view = view[view["own"] == (own_sel == "Eigene FI-Kanäle")]
 if sent_map[sent_sel]:
     view = view[view["sentiment"] == sent_map[sent_sel]]
 if cat_sel != "Alle":
@@ -302,7 +334,7 @@ for _, r in view.iterrows():
   <div class="txt">{text}</div>
   <div class="meta">
     <span class="pill sent">{label} · {r['confidence']:.0%}</span>
-    <span class="pill cat">{escape(r['category'])}</span>
+    {'<span class="pill own">FI-Kanal</span>' if r['own'] else ''}<span class="pill cat">{escape(r['category'])}</span>
     <span class="stat">👍 {int(r['likes'])} &nbsp; 💬 {int(r['comments'])}</span>
     <a class="open" href="{escape(r['url'])}" target="_blank" rel="noopener">Beitrag öffnen ↗</a>
   </div>
