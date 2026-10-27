@@ -12,9 +12,54 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-10-26T13:45:00Z"
+VERIFIED_AT = "2026-10-27T07:15:10Z"
 
 DEMO_MENTIONS = [
+    {
+        'id': 'li_7520733531245953024',
+        'author': 'Banking-Partner Beratungsgesellschaft mbH',
+        'author_title': 'Unternehmensseite',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/freuen-sie-sich-auch-schon-so-sehr-wie-wir-share-7520733531245953024-211e/',
+        'text': 'Freuen Sie sich auch schon so sehr wie wir? Nur noch 7 Tage bis zum FI-Forum in Frankfurt! … Berücksichtigen Sie bei der Erstellung Ihres Messeplans gern den Stand 25! Wir halten erfrischende Smoothies bereit und freuen uns auf das Gespräch mit Ihnen.',
+        'created_at': '2026-10-27T06:30:02Z',
+        'likes': 3, 'comments': 1,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'Countdown „noch 7 Tage“ und Einladung an Stand 25 mit Terminbuchung.',
+        'themes': ['Aussteller', 'Countdown', 'Sparkassen-Finanzgruppe'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7520542123365081088',
+        'author': 'Simon Conrads',
+        'author_title': 'Rolloutmanager, Finanz Informatik',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/simonconrads_der-countdown-l%C3%A4uft-in-einer-woche-startet-share-7520542123365081088-WrQO/',
+        'text': 'Der Countdown läuft! ⏳ In einer Woche startet das FI-Forum der Finanz Informatik in der Messe Frankfurt – und für mich ist es das erste Mal 🚀 … Mein Geheimtipp: der Vortrag von Philipp Klöckner am Dienstag.',
+        'created_at': '2026-10-26T17:49:27Z',
+        'likes': 9, 'comments': 0,
+        'category': 'Vorfreude / Networking',
+        'sentiment': 'positive', 'confidence': 0.96, 'severity': 'low',
+        'summary': 'FI-Mitarbeiter freut sich aufs erste FI-Forum, empfiehlt Keynote von Philipp Klöckner.',
+        'themes': ['Countdown', 'Vorträge', 'Wohnen & Finanzieren'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7520523956928286720',
+        'author': 'Simon Pace',
+        'author_title': 'Head of Business Growth, GuideCom',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/simonpace-in_neue-technologien-neue-m%C3%B6glichkeiten-warum-share-7520523956928286720-u-7l/',
+        'text': 'Neue Technologien. Neue Möglichkeiten. Warum es jetzt auf uns alle ankommt. Wenn ich an das FI-Forum in Frankfurt denke, denke ich vor allem an ein Wort: Zusammen. … Auch die Masterclass zum SKI-Pilot steht für diese Zusammenarbeit.',
+        'created_at': '2026-10-26T16:37:15Z',
+        'likes': 11, 'comments': 0,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.94, 'severity': 'low',
+        'summary': 'GuideCom betont Zusammenarbeit mit der FI (rudi, NAVI, Masterclass SKI-Pilot).',
+        'themes': ['KI', 'Masterclasses', 'Aussteller'],
+        'verified': True,
+    },
     {
         'id': 'li_7520416325832261632',
         'author': 'Frank Pieper',
