@@ -12,9 +12,54 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-10-28T10:54:25Z"
+VERIFIED_AT = "2026-10-28T13:49:19Z"
 
 DEMO_MENTIONS = [
+    {
+        'id': 'li_7521205298553004032',
+        'author': 'Sascha Wesseli',
+        'author_title': 'IT Business Analyst, Finanz Informatik',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/sascha-m-wesseli_fi-teamfi-share-7521205298553004032-QyTM/',
+        'text': 'In nicht einmal einer Woche startet das FI-Forum!🚀 Ich bin am 04. November am Stand OU09 und freue mich schon auf interessante Gespräche und spannende Impulse. #fi-forum #teamfi',
+        'created_at': '2026-10-28T13:44:40Z',
+        'likes': 0, 'comments': 0,
+        'category': 'Vorfreude / Networking',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'FI-Mitarbeiter am 4. November am Stand OU09.',
+        'themes': ['Countdown', 'Networking'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7521199999641145344',
+        'author': 'ventuno GmbH',
+        'author_title': 'Unternehmensseite',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/icm-fi-officeabrneo-share-7521199999641145344-jruR/',
+        'text': 'FI-Forum 2026 – wir freuen uns auf Sie! Manche Gespräche führt man am besten persönlich. Vom 3. bis 5. November sind wir mit ventuno in Frankfurt dabei. … An unserem Stand PV 14 geht es um digitale Kompetenzen im KI-Zeitalter, die FI-Standards ICM für das Informationsmanagement und mehr.',
+        'created_at': '2026-10-28T13:23:37Z',
+        'likes': 1, 'comments': 1,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'ventuno an Stand PV 14: KI-Kompetenzen, ICM-Standards für Sparkassen.',
+        'themes': ['Aussteller', 'KI', 'Digitalisierung'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7521192085400506368',
+        'author': 'Christoph Müller',
+        'author_title': 'Business Continuity Manager, Finanz Informatik',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/christoph-m%C3%BCller-002b7a24_n%C3%A4chste-woche-startet-das-fi-forum-ich-werde-share-7521192085400506368--5No/',
+        'text': 'Nächste Woche startet das FI-Forum. Ich werde am 5.11.2026 vor Ort sein.',
+        'created_at': '2026-10-28T12:52:10Z',
+        'likes': 4, 'comments': 0,
+        'category': 'Vorfreude / Networking',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'FI-Mitarbeiter kündigt Teilnahme am 5. November an.',
+        'themes': ['Countdown', 'Teilnahme'],
+        'verified': True,
+    },
     {
         'id': 'li_7521159033836380160',
         'author': 'Tobias Kolarsch',
