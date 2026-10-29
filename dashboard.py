@@ -49,15 +49,17 @@ html, body, [class*="css"], .stApp {{ font-family: 'Inter', sans-serif; }}
 .hero {{
   background: linear-gradient(120deg, {RED} 0%, {RED_DARK} 100%);
   border-radius: 18px; padding: 28px 32px; color: #fff;
-  display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;
+  display: flex; justify-content: space-between; align-items: stretch; gap: 24px; flex-wrap: wrap;
   box-shadow: 0 10px 30px rgba(227,6,19,.18);
 }}
-.logo-pill {{ display:inline-flex; background:#fff; border-radius:10px; padding:8px 14px; margin-bottom:14px; }}
+.logo-pill {{ display:inline-flex; background:#fff; border-radius:10px; padding:8px 14px; }}
 .logo-pill img {{ height:26px; display:block; }}
 .hero .eyebrow {{ font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; font-weight: 600; }}
 .hero h1 {{ font-size: 34px; font-weight: 800; margin: 6px 0 6px; line-height: 1.1; color: #fff; }}
 .hero .sub {{ font-size: 15px; opacity: .92; }}
-.hero .right {{ text-align: right; }}
+.hero .right {{ text-align: right; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }}
+.hero .right .logo-pill {{ margin-bottom:6px; }}
+.hero .right .countdown {{ margin-top:0; }}
 .badge-live {{ display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.16);
   padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; }}
 .dot {{ width: 8px; height: 8px; border-radius: 50%; background: #7CFFB2; box-shadow: 0 0 0 4px rgba(124,255,178,.25); }}
@@ -205,12 +207,12 @@ else:
 st.markdown(f"""
 <div class="hero">
   <div>
-    <div class="logo-pill">{LOGO_IMG}</div>
     <div class="eyebrow">Social Listening · Sparkassen-Finanzgruppe</div>
     <h1>FI-Forum 2026</h1>
     <div class="sub">3.–5. November 2026 · Messe Frankfurt</div>
   </div>
   <div class="right">
+    <div class="logo-pill">{LOGO_IMG}</div>
     <div class="badge-live"><span class="dot"></span>Zuletzt geprüft: {fmt_dt(verified)}</div>
     <div class="countdown">{countdown}</div>
   </div>
