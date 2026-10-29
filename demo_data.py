@@ -12,9 +12,54 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-10-28T13:49:19Z"
+VERIFIED_AT = "2026-10-29T07:37:06Z"
 
 DEMO_MENTIONS = [
+    {
+        'id': 'li_7521473515523293184',
+        'author': 'Jana Bartholomäus',
+        'author_title': 'Strategische Impulse für Banking, Ökosysteme und Innovation',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/janabartholomaeus_n%C3%A4chste-woche-stehe-ich-in-frankfurt-auf-share-7521473515523293184-HpIf/',
+        'text': 'Nächste Woche stehe ich in Frankfurt auf der Bühne. Mit zwei Masterclasses. … Vom 3. bis 5. November findet das FI-Forum der Finanz Informatik statt. Gemeinsam mit meinem Kollegen Paul Ackermann begebe ich mich auf eine investigative Spurensuche.',
+        'created_at': '2026-10-29T07:30:28Z',
+        'likes': 1, 'comments': 0,
+        'category': 'Speaker / Vortrag',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'Zwei Masterclasses auf dem FI-Forum, eine davon mit Paul Ackermann.',
+        'themes': ['Masterclasses', 'Vorträge'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7521473206441005056',
+        'author': 'Heinrich Piermeier',
+        'author_title': 'Geschäftsführer und Partner, EGC Eurogroup Consulting',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/heinrich-piermeier-90b645137_fiforum2026-ki-digitalisierung-share-7521473206441005056-mkQ6/',
+        'text': 'Zwischen Cloud, Daten und KI fehlt manchmal das Wichtigste: ein Mensch. 🤗 … besuchen Sie mich am Stand 23 auf dem FI-Forum 2026 in Frankfurt (3.–5. November). #FIForum2026 #KI #Heimvorteil',
+        'created_at': '2026-10-29T07:29:14Z',
+        'likes': 0, 'comments': 0,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'EGC lädt an Stand 23 ein – Mensch statt nur KI und Cloud.',
+        'themes': ['Aussteller', 'KI', 'Heimvorteil'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7521207790170804224',
+        'author': 'S-Communication Services GmbH',
+        'author_title': 'Unternehmensseite',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/vorbeikommen-lohnt-sich-die-s-com-beim-share-7521207790170804224-Rbfy/',
+        'text': 'Vorbeikommen lohnt sich: Die S-Com beim FI-Forum erleben 🤝 Nächste Woche öffnet das FI-Forum wieder seine Tore … Unter dem Motto „Erreichen. Aktivieren. Verbinden.“ zeigen wir am Stand 44 der DSV-Gruppe, was moderne Kommunikation ausmacht.',
+        'created_at': '2026-10-28T13:54:34Z',
+        'likes': 0, 'comments': 0,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'S-Com am Stand 44 der DSV-Gruppe: digitale Reputation, New Search, Kundenreisen.',
+        'themes': ['Aussteller', 'Kommunikation', 'Digitalisierung'],
+        'verified': True,
+    },
     {
         'id': 'li_7521205298553004032',
         'author': 'Sascha Wesseli',
