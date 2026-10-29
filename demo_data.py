@@ -12,9 +12,54 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-10-29T07:37:06Z"
+VERIFIED_AT = "2026-10-29T18:51:19Z"
 
 DEMO_MENTIONS = [
+    {
+        'id': 'li_7521638003811897344',
+        'author': 'Tanja Gerling',
+        'author_title': 'Executive Partner, msg for banking ag',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/tanja-gerling-575979446_unser-msg-team-hei%C3%9Ft-sie-herzlich-willkommen-share-7521638003811897344-IEAu/',
+        'text': 'Unser msg-Team heißt Sie herzlich willkommen auf dem FI-Forum. Besuchen Sie uns am Stand 29 in Halle 5.1 oder lassen Sie uns bei einem Kaffee ☕️ oder Kaltgetränk wieder einmal persönlich austauschen.',
+        'created_at': '2026-10-29T18:24:05Z',
+        'likes': 2, 'comments': 0,
+        'category': 'Aussteller / Teilnahme',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'msg for banking lädt an Stand 29 in Halle 5.1 ein.',
+        'themes': ['Aussteller', 'Networking'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7521635624471240705',
+        'author': 'Arne Feske',
+        'author_title': 'Abteilungsleiter ProzessPlus Steuerung, Finanz Informatik',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/arne-feske-3b95752a_heimspiel-fiforum-teamfi-share-7521635624471240705-d9V7/',
+        'text': 'So langsam wird der Koffer gedanklich gepackt: Nächste Woche ruft wieder das FI-Forum! 🧳 … Mein erstes FI-Forum war am 14.11.2012 … Seitdem habe ich kein einziges verpasst.',
+        'created_at': '2026-10-29T18:14:38Z',
+        'likes': 5, 'comments': 0,
+        'category': 'Vorfreude / Networking',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'Langjähriger FI-Forum-Besucher seit 2012, Vorfreude auf Banksteuerungs-Themen.',
+        'themes': ['Vorfreude', 'Banksteuerung', 'Tradition'],
+        'verified': True,
+    },
+    {
+        'id': 'li_7521634912521859072',
+        'author': 'Carolin Bloch',
+        'author_title': 'Abteilungsleiterin, Finanz Informatik',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/carolin-bloch-47086b155_fiforum2026-frankfurt-letsconnect-share-7521634912521859072-MwDo/',
+        'text': 'Zeit für Austausch 💭 neue Perspektiven 🔭 und spannende Themen ⚡️ Nach 2023 ist dieses mein zweites FI-Forum und ich freue mich auf die phänomenale Atmosphäre … Ihr trefft mich am Messestand zur Digitalen Signatur.',
+        'created_at': '2026-10-29T18:11:48Z',
+        'likes': 3, 'comments': 0,
+        'category': 'Vorfreude / Networking',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'FI-Abteilungsleiterin am Stand zur Digitalen Signatur, lobt Atmosphäre.',
+        'themes': ['Vorfreude', 'Digitale Signatur', 'Heimvorteil'],
+        'verified': True,
+    },
     {
         'id': 'li_7521473515523293184',
         'author': 'Jana Bartholomäus',

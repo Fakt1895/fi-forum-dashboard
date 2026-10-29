@@ -244,16 +244,34 @@ c1, c2, c3 = st.columns([1.5, 1, 1.2], gap="medium")
 
 with c1.container(border=True):
     st.markdown('<h3 class="ct">Beiträge pro Tag</h3><div class="cap">nach Veröffentlichungsdatum</div>', unsafe_allow_html=True)
-    per_day = df.assign(day=df["created_at"].dt.tz_convert(TZ).dt.date).groupby("day").agg(
-        posts=("id", "count"), reac=("likes", "sum")).reset_index()
-    full = pd.DataFrame({"day": pd.date_range(per_day["day"].min(), max(per_day["day"].max(), datetime.now(TZ).date())).date})
-    per_day = full.merge(per_day, on="day", how="left").fillna(0)
-    fig = go.Figure(go.Bar(
-        x=[d.strftime("%d.%m.") for d in per_day["day"]], y=per_day["posts"],
-        marker_color=RED, marker_line_width=0,
-        hovertemplate="%{x}: %{y} Beiträge<extra></extra>"))
-    fig.update_yaxes(gridcolor=LINE, nticks=6, zeroline=False)
-    fig.update_xaxes(showgrid=False, tickangle=0, nticks=8)
+    CHART_START = date(2026, 10, 1)
+    days_local = df["created_at"].dt.tz_convert(TZ).dt.date
+    earlier = int((days_local < CHART_START).sum())
+    per_day = days_local[days_local >= CHART_START].value_counts().sort_index()
+    rng = pd.date_range(CHART_START, max(datetime.now(TZ).date(), max(per_day.index, default=CHART_START)))
+    per_day = per_day.reindex(rng.date, fill_value=0)
+    chart_mode = st.segmented_control("Darstellung", ["Balken", "Linie", "Kumuliert"], default="Balken",
+                                      key="day_chart_mode", label_visibility="collapsed") or "Balken"
+    xs = pd.to_datetime(list(per_day.index))
+    ys = per_day.values
+    if chart_mode == "Balken":
+        fig = go.Figure(go.Bar(x=xs, y=ys, marker_color=RED, marker_line_width=0,
+                               hovertemplate="%{x|%d.%m.}: %{y} Beiträge<extra></extra>"))
+        fig.update_layout(bargap=0.15)
+    else:
+        yv = ys.cumsum() + earlier if chart_mode == "Kumuliert" else ys
+        label = "Beiträge gesamt" if chart_mode == "Kumuliert" else "Beiträge"
+        fig = go.Figure(go.Scatter(x=xs, y=yv, mode="lines+markers", line=dict(color=RED, width=2.5, shape="spline", smoothing=0.6),
+                                   marker=dict(size=5, color=RED), fill="tozeroy", fillcolor="rgba(227,6,19,0.08)",
+                                   hovertemplate="%{x|%d.%m.}: %{y} " + label + "<extra></extra>"))
+    fig.add_vrect(x0=pd.Timestamp(EVENT_START) - pd.Timedelta(hours=12), x1=pd.Timestamp(EVENT_START) + pd.Timedelta(days=2, hours=12),
+                  fillcolor="rgba(227,6,19,0.06)", line_width=0, annotation_text="FI-Forum", annotation_position="top left",
+                  annotation_font=dict(size=11, color=MUTED))
+    fig.update_yaxes(gridcolor=LINE, nticks=6, zeroline=False, rangemode="tozero")
+    fig.update_xaxes(showgrid=False, tickformat="%d.%m.", dtick=7 * 24 * 3600 * 1000, tick0="2026-10-01",
+                     range=[pd.Timestamp(CHART_START) - pd.Timedelta(hours=12), pd.Timestamp(max(rng[-1].date(), date(2026, 11, 10))) + pd.Timedelta(hours=12)])
+    if earlier:
+        st.caption(f"Ab 1. Oktober · {earlier} ältere Beiträge ausgeblendet")
     st.plotly_chart(plot_base(fig), use_container_width=True, config=cfg)
 
 with c2.container(border=True):
