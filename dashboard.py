@@ -9,6 +9,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
+import base64
+from pathlib import Path
 
 import importlib
 import demo_data
@@ -50,6 +52,8 @@ html, body, [class*="css"], .stApp {{ font-family: 'Inter', sans-serif; }}
   display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap;
   box-shadow: 0 10px 30px rgba(227,6,19,.18);
 }}
+.logo-pill {{ display:inline-flex; background:#fff; border-radius:10px; padding:8px 14px; margin-bottom:14px; }}
+.logo-pill img {{ height:26px; display:block; }}
 .hero .eyebrow {{ font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; font-weight: 600; }}
 .hero h1 {{ font-size: 34px; font-weight: 800; margin: 6px 0 6px; line-height: 1.1; color: #fff; }}
 .hero .sub {{ font-size: 15px; opacity: .92; }}
@@ -187,6 +191,9 @@ authors = df["author"].nunique()
 days_left = (EVENT_START - datetime.now(TZ).date()).days
 verified = pd.Timestamp(VERIFIED_AT)
 
+_logo = Path(__file__).with_name("fi_logo.png")
+LOGO_IMG = (f'<img src="data:image/png;base64,{base64.b64encode(_logo.read_bytes()).decode()}" alt="Finanz Informatik">'
+            if _logo.exists() else "")
 # ---------- Hero ----------
 if days_left > 0:
     countdown = f'{days_left}<small> Tage bis Eventstart</small>'
@@ -198,6 +205,7 @@ else:
 st.markdown(f"""
 <div class="hero">
   <div>
+    <div class="logo-pill">{LOGO_IMG}</div>
     <div class="eyebrow">Social Listening · Sparkassen-Finanzgruppe</div>
     <h1>FI-Forum 2026</h1>
     <div class="sub">3.–5. November 2026 · Messe Frankfurt</div>
@@ -250,11 +258,30 @@ with c1.container(border=True):
     per_day = days_local[days_local >= CHART_START].value_counts().sort_index()
     rng = pd.date_range(CHART_START, max(datetime.now(TZ).date(), max(per_day.index, default=CHART_START)))
     per_day = per_day.reindex(rng.date, fill_value=0)
-    chart_mode = st.segmented_control("Darstellung", ["Balken", "Linie", "Kumuliert"], default="Balken",
+    chart_mode = st.segmented_control("Darstellung", ["Balken", "Linie", "Kumuliert", "Kanal", "Stimmung"], default="Balken",
                                       key="day_chart_mode", label_visibility="collapsed") or "Balken"
     xs = pd.to_datetime(list(per_day.index))
     ys = per_day.values
-    if chart_mode == "Balken":
+    if chart_mode in ("Kanal", "Stimmung"):
+        sub = df.assign(day=days_local)
+        sub = sub[sub["day"] >= CHART_START]
+        if chart_mode == "Kanal":
+            col = "source"
+            groups = [g for g in ["LinkedIn", "Instagram", "Facebook", "TikTok", "X", "News"] if g in set(sub[col])]
+            colors = {"LinkedIn": "#0A66C2", "Instagram": "#DD2A7B", "Facebook": "#1877F2", "TikTok": "#111111", "X": "#555555", "News": "#9AA0A6"}
+            labels = {g: g for g in groups}
+        else:
+            col = "sentiment"
+            groups = [g for g in ["positive", "neutral", "negative"] if g in set(sub[col])]
+            colors = {"positive": POS, "neutral": NEU, "negative": NEG}
+            labels = {"positive": "Positiv", "neutral": "Neutral", "negative": "Negativ"}
+        fig = go.Figure()
+        for g in groups:
+            cnt = sub[sub[col] == g]["day"].value_counts().reindex(rng.date, fill_value=0)
+            fig.add_trace(go.Bar(x=xs, y=cnt.values, name=labels[g], marker_color=colors[g], marker_line_width=0,
+                                 hovertemplate="%{x|%d.%m.}: %{y} " + labels[g] + "<extra></extra>"))
+        fig.update_layout(barmode="stack", bargap=0.15)
+    elif chart_mode == "Balken":
         fig = go.Figure(go.Bar(x=xs, y=ys, marker_color=RED, marker_line_width=0,
                                hovertemplate="%{x|%d.%m.}: %{y} Beiträge<extra></extra>"))
         fig.update_layout(bargap=0.15)
@@ -272,7 +299,10 @@ with c1.container(border=True):
                      range=[pd.Timestamp(CHART_START) - pd.Timedelta(hours=12), pd.Timestamp(max(rng[-1].date(), date(2026, 11, 10))) + pd.Timedelta(hours=12)])
     if earlier:
         st.caption(f"Ab 1. Oktober · {earlier} ältere Beiträge ausgeblendet")
-    st.plotly_chart(plot_base(fig), use_container_width=True, config=cfg)
+    fig = plot_base(fig)
+    if chart_mode in ("Kanal", "Stimmung"):
+        fig.update_layout(showlegend=True, legend=dict(orientation="h", y=-0.18, x=0, font=dict(size=11)), margin=dict(b=40))
+    st.plotly_chart(fig, use_container_width=True, config=cfg)
 
 with c2.container(border=True):
     st.markdown('<h3 class="ct">Stimmung</h3><div class="cap">Einordnung je Beitrag</div>', unsafe_allow_html=True)
