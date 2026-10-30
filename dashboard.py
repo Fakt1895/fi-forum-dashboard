@@ -338,15 +338,24 @@ with c3.container(border=True):
 # ---------- Themes & categories ----------
 t1, t2 = st.columns([1.4, 1], gap="medium")
 with t1:
-    theme_counts = pd.Series([t for ts in df["themes"] for t in ts]).value_counts().head(12)
+    theme_counts = pd.Series([t for ts in df["themes"] for t in ts]).value_counts().head(22)
     chips = "".join(f'<div class="chip">{escape(t)}<span>{c}</span></div>' for t, c in theme_counts.items())
     st.markdown(f'<div class="card"><h3>Top-Themen</h3><div class="cap">Wie oft ein Thema in den Beiträgen vorkommt</div><div class="chips">{chips}</div></div>', unsafe_allow_html=True)
 with t2:
-    cats = df["category"].value_counts()
+    cats_all = df["category"].value_counts()
+    PER = 6
+    pages = max(1, -(-len(cats_all) // PER))
+    pg = 1
+    if pages > 1:
+        pg = st.session_state.get("cat_page") or 1
+    cats = cats_all.iloc[(pg - 1) * PER: pg * PER]
     rows = "".join(
         f'<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid {LINE};font-size:14px">'
         f'<span>{escape(k)}</span><b>{v}</b></div>' for k, v in cats.items())
-    st.markdown(f'<div class="card"><h3>Wer spricht über das FI-Forum?</h3><div class="cap">nach Art des Beitrags</div>{rows}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="card"><h3>Wer spricht über das FI-Forum?</h3><div class="cap">nach Art des Beitrags · Seite {pg} von {pages}</div>{rows}</div>', unsafe_allow_html=True)
+    if pages > 1:
+        st.segmented_control("Seite", list(range(1, pages + 1)), default=1, key="cat_page",
+                             format_func=lambda p: f"Seite {p}", label_visibility="collapsed")
 
 # ---------- Feed ----------
 st.markdown('<div class="section">Alle Beiträge</div>', unsafe_allow_html=True)
