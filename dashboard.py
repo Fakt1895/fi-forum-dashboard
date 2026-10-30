@@ -324,13 +324,22 @@ with c2.container(border=True):
     st.plotly_chart(plot_base(fig), use_container_width=True, config=cfg)
 
 with c3.container(border=True):
-    st.markdown('<h3 class="ct">Reichweite nach Absender</h3><div class="cap">Reaktionen je Absender</div>', unsafe_allow_html=True)
-    by_author = df.groupby("author")["likes"].sum().sort_values().tail(8)
+    st.markdown('<h3 class="ct">Top-Absender</h3>', unsafe_allow_html=True)
+    am = st.segmented_control("Absender-Ansicht", ["Beiträge", "Reaktionen"], default="Beiträge",
+                              key="author_mode", label_visibility="collapsed") or "Beiträge"
+    if am == "Beiträge":
+        by_author = df.groupby("author").size().sort_values().tail(8)
+        unit = "Beiträge"
+    else:
+        by_author = df.groupby("author")["likes"].sum().sort_values().tail(8)
+        unit = "Reaktionen"
+    st.markdown(f'<div class="cap">{unit} je Absender (Top 8)</div>', unsafe_allow_html=True)
     fig = go.Figure(go.Bar(
-        x=by_author.values, y=by_author.index, orientation="h",
+        x=by_author.values, y=[a if len(a) <= 24 else a[:23] + "…" for a in by_author.index], orientation="h",
+        customdata=list(by_author.index),
         marker_color=[RED if v == by_author.max() else "#F3A0A6" for v in by_author.values],
         text=by_author.values, textposition="outside", cliponaxis=False,
-        hovertemplate="%{y}: %{x} Reaktionen<extra></extra>"))
+        hovertemplate="%{customdata}: %{x} " + unit + "<extra></extra>"))
     fig.update_xaxes(visible=False, range=[0, by_author.max()*1.25])
     fig.update_yaxes(showgrid=False)
     st.plotly_chart(plot_base(fig), use_container_width=True, config=cfg)
