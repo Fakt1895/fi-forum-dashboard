@@ -15,6 +15,21 @@ from collections import Counter
 VERIFIED_AT = "2026-10-30T16:27:00Z"
 
 DEMO_MENTIONS = [
+    {
+        'id': 'li_7521872606367703040',
+        'author': 'Hüseyin Topel',
+        'author_title': 'Experte Kommunikation, Unternehmenskommunikation Finanz Informatik',
+        'source': 'LinkedIn',
+        'url': 'https://www.linkedin.com/posts/h%C3%BCseyin-topel_professional-creative-simultan-gleichzeitig-ugcPost-7521872606367703040--XIk/',
+        'text': 'Professional Creative. Simultan. Gleichzeitig. Kreativ und professionell. 🐐 Mein erstes FI-FORUM steht bevor! Alle schwärmen davon. Viele meiner Kolleginnen und Kollegen sind seit Monaten „on fire“ … Vom 3. bis 5. November in Frankfurt. Wir sehen uns!',
+        'created_at': '2026-10-30T09:56:18Z',
+        'likes': 8, 'comments': 3,
+        'category': 'Vorfreude / Networking',
+        'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low',
+        'summary': 'FI-Kommunikationsexperte vor seinem ersten FI-Forum, Einblick in die Vorbereitung.',
+        'themes': ['Vorfreude', 'Unternehmenskommunikation', 'Content'],
+        'verified': True,
+    },
     {'id': 'li_7521955533994692608',
      'author': 'SVA Big Data & AI',
      'author_title': 'Unternehmen',
