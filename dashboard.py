@@ -70,6 +70,11 @@ html, body, [class*="css"], .stApp {{ font-family: 'Inter', sans-serif; }}
 @media (max-width: 900px) {{ .kpis {{ grid-template-columns: repeat(2, 1fr); }} .hero .right {{ text-align: left; }} }}
 .kpi {{ background: #fff; border: 1px solid {LINE}; border-radius: 14px; padding: 16px 18px; }}
 .kpi .label {{ font-size: 12px; color: {MUTED}; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }}
+.info {{ position: relative; display: inline-flex; align-items: center; justify-content: center; width: 12px; height: 12px; margin-left: 4px; border-radius: 50%; border: 1px solid {MUTED}; color: {MUTED}; font-size: 8px; font-weight: 700; text-transform: none; letter-spacing: 0; cursor: help; vertical-align: 1px; }}
+.info .tip {{ visibility: hidden; opacity: 0; position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 230px; background: {INK}; color: #fff; font-size: 12px; font-weight: 400; line-height: 1.45; padding: 9px 11px; border-radius: 8px; z-index: 20; transition: opacity .15s; box-shadow: 0 6px 18px rgba(0,0,0,.18); }}
+.info:hover .tip {{ visibility: visible; opacity: 1; }}
+.kpi:last-child .info .tip {{ left: auto; right: -8px; transform: none; }}
+.kpi:first-child .info .tip {{ left: -8px; transform: none; }}
 .kpi .value {{ font-size: 30px; font-weight: 800; color: {INK}; margin-top: 6px; }}
 .kpi .hint {{ font-size: 12px; color: {MUTED}; margin-top: 2px; }}
 
@@ -222,11 +227,11 @@ st.markdown(f"""
 # ---------- KPIs ----------
 st.markdown(f"""
 <div class="kpis">
-  <div class="kpi"><div class="label">Beiträge</div><div class="value">{n}</div><div class="hint">verifiziert, mit Link</div></div>
-  <div class="kpi"><div class="label">Reaktionen</div><div class="value">{reactions:,}</div><div class="hint">Summe aller Beiträge</div></div>
-  <div class="kpi"><div class="label">Kommentare</div><div class="value">{comments}</div><div class="hint">Summe aller Beiträge</div></div>
-  <div class="kpi"><div class="label">Stimmung positiv</div><div class="value" style="color:{POS}">{pos_share}%</div><div class="hint">Anteil der Beiträge</div></div>
-  <div class="kpi"><div class="label">Kritische Hinweise</div><div class="value" style="color:{NEG if critical else INK}">{critical}</div><div class="hint">{authors} verschiedene Absender</div></div>
+  <div class="kpi"><div class="label">Beiträge<span class="info">i<span class="tip">Alle öffentlichen Beiträge zum FI-Forum 2026, die einzeln geöffnet und geprüft wurden. Jeder Eintrag hat einen anklickbaren Originallink.</span></span></div><div class="value">{n}</div><div class="hint">verifiziert, mit Link</div></div>
+  <div class="kpi"><div class="label">Reaktionen<span class="info">i<span class="tip">Summe aller Likes und sonstigen Reaktionen (z. B. Applaus, Herz) unter den erfassten Beiträgen. Reposts und Aufrufe sind nicht enthalten.</span></span></div><div class="value">{reactions:,}</div><div class="hint">Summe aller Beiträge</div></div>
+  <div class="kpi"><div class="label">Kommentare<span class="info">i<span class="tip">Summe aller öffentlichen Kommentare unter den erfassten Beiträgen. Antworten auf Kommentare zählen mit.</span></span></div><div class="value">{comments}</div><div class="hint">Summe aller Beiträge</div></div>
+  <div class="kpi"><div class="label">Stimmung positiv<span class="info">i<span class="tip">Anteil der Beiträge, deren Tonalität positiv eingeordnet ist (Vorfreude, Lob, Empfehlung). Neutral = rein informativ oder abwägend.</span></span></div><div class="value" style="color:{POS}">{pos_share}%</div><div class="hint">Anteil der Beiträge</div></div>
+  <div class="kpi"><div class="label">Kritische Hinweise<span class="info">i<span class="tip">Beiträge mit negativer Stimmung oder Kritik am Event bzw. an der FI. Sie werden als Frühwarnung sofort markiert.</span></span></div><div class="value" style="color:{NEG if critical else INK}">{critical}</div><div class="hint">{authors} verschiedene Absender</div></div>
 </div>
 """.replace(",", "."), unsafe_allow_html=True)
 
