@@ -12,9 +12,26 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-10-30T12:48:00Z"
+VERIFIED_AT = "2026-10-30T14:33:00Z"
 
 DEMO_MENTIONS = [
+    {'id': 'li_7521923951736922112',
+     'author': 'Katja Löhndorf',
+     'author_title': 'Managing Partner bei MLU Matthias Leimpek Unternehmensberatung e.K./Prokuristin bei Tekko Informationssysteme GmbH und Co. KG',
+     'source': 'LinkedIn',
+     'url': 'https://www.linkedin.com/posts/katja-l%C3%B6hndorf_wir-freuen-uns-auf-alle-besucher-an-stand-share-7521923951736922112-_o09/',
+     'text': 'Wir freuen uns auf alle Besucher an Stand 11 😃 (Repost des tekko-Beitrags: „Beim FI-Forum nehmen wir uns an unserem Stand die Zeit, mit Ihnen einen realistischen Fahrplan zu skizzieren … '
+             'Vom 3. bis 5. November in der Messe Frankfurt.“ #FIForum2026 #Sparkassen #IKS #PIKSA #tekko)',
+     'created_at': '2026-10-30T13:20:20Z',
+     'likes': 0,
+     'comments': 0,
+     'category': 'Aussteller-Ankündigung',
+     'sentiment': 'positive',
+     'confidence': 0.85,
+     'severity': 'low',
+     'summary': 'tekko-Prokuristin teilt den tekko-Beitrag zu IKS/PIKSA und lädt an Stand 11 ein.',
+     'themes': ['Aussteller', 'IKS', 'PIKSA', 'Stand 11'],
+     'verified': True},
     {'id': 'li_7521912802362548225',
      'author': 'Alicia Worpenberg',
      'author_title': 'Abteilungsleiterin bei Finanz Informatik',
