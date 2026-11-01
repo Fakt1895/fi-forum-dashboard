@@ -75,6 +75,10 @@ html, body, [class*="css"], .stApp {{ font-family: 'Inter', sans-serif; }}
 .es-list {{ margin:2px 0 0; padding-left:18px; }} .es-list li {{ margin:3px 0; }}
 .es-card a {{ color:{RED}; font-weight:600; text-decoration:none; }}
 .es-foot {{ margin-top:12px; font-size:11.5px; color:{MUTED}; }}
+.hnav {{ margin-top:18px; display:flex; gap:22px; }}
+.hnav a {{ color:rgba(255,255,255,.75) !important; text-decoration:none !important; font-weight:600; font-size:14px; padding-bottom:3px; border-bottom:2px solid transparent; }}
+.hnav a:hover {{ color:#fff !important; }}
+.hnav a.on {{ color:#fff !important; border-bottom-color:#fff; }}
 .kpis {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 18px 0 8px; }}
 @media (max-width: 900px) {{ .kpis {{ grid-template-columns: repeat(2, 1fr); }} .hero .right {{ text-align: left; }} }}
 .kpi {{ background: #fff; border: 1px solid {LINE}; border-radius: 14px; padding: 16px 18px; }}
@@ -210,6 +214,9 @@ verified = pd.Timestamp(VERIFIED_AT)
 _logo = Path(__file__).with_name("fi_logo.png")
 LOGO_IMG = (f'<img src="data:image/png;base64,{base64.b64encode(_logo.read_bytes()).decode()}" alt="Finanz Informatik">'
             if _logo.exists() else "")
+page = "Executive Summary" if st.query_params.get("view") == "summary" else "Dashboard"
+_nav = (f'<div class="hnav"><a href="?view=dashboard" target="_top" class="{"on" if page == "Dashboard" else ""}">Dashboard</a>'
+        f'<a href="?view=summary" target="_top" class="{"on" if page != "Dashboard" else ""}">Executive Summary</a></div>')
 # ---------- Hero ----------
 if days_left > 0:
     countdown = f'{days_left}<small> Tage bis Eventstart</small>'
@@ -224,6 +231,7 @@ st.markdown(f"""
     <div class="eyebrow">Social Listening · Sparkassen-Finanzgruppe</div>
     <h1>FI-Forum 2026</h1>
     <div class="sub">3.–5. November 2026 · Messe Frankfurt</div>
+    {_nav}
   </div>
   <div class="right">
     <div class="logo-pill">{LOGO_IMG}</div>
@@ -233,9 +241,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ---------- Menü ----------
-page = st.segmented_control("Ansicht", ["Dashboard", "Executive Summary"], default="Dashboard",
-                            key="page", label_visibility="collapsed") or "Dashboard"
+# ---------- Menü (im roten Kopf) ----------
 if page == "Executive Summary":
     WD = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
     _today = datetime.now(TZ).date()
