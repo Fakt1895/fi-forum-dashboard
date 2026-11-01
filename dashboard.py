@@ -233,52 +233,56 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ---------- Executive Summary (Tagesbericht) ----------
-WD = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-_today = datetime.now(TZ).date()
-_dates = df["created_at"].dt.tz_convert(TZ).dt.date
-_opts = [_today - pd.Timedelta(days=i) for i in range(0, 10)]
-_opts = [d.date() if hasattr(d, "date") else d for d in _opts]
-es_l, es_r = st.columns([3, 1])
-with es_l:
-    st.markdown('<div class="section" style="margin-top:6px">Executive Summary</div>', unsafe_allow_html=True)
-with es_r:
-    sel_day = st.selectbox("Tag", _opts, index=0, label_visibility="collapsed",
-                           format_func=lambda d: ("Heute, " if d == _today else "") + f"{WD[d.weekday()]} {d:%d.%m.%Y}")
-dd = df[_dates == sel_day]
-prev = df[_dates == (sel_day - pd.Timedelta(days=1))]
-nd, npv = len(dd), len(prev)
-delta = ("gleich viele wie am Vortag" if nd == npv else
-         f"{'+' if nd > npv else '–'}{abs(nd - npv)} ggü. Vortag ({npv})")
-neg_d = dd[dd["sentiment"] == "negative"]
-neu_d = dd[dd["sentiment"] == "neutral"]
-own_d = int(dd["own"].sum())
-cat_d = dd["category"].value_counts()
-def _cnt(prefix):
-    return int(cat_d[[c for c in cat_d.index if c.startswith(prefix)]].sum()) if len(cat_d) else 0
-th_d = pd.Series([t for ts in dd["themes"] for t in ts]).value_counts().head(3)
-top_d = dd.sort_values(["likes", "comments"], ascending=False).head(3)
-day_lbl = ("heute" if sel_day == _today else f"am {WD[sel_day.weekday()]} {sel_day:%d.%m.}")
-if nd == 0:
-    es_body = f'<div class="es-head">Keine neuen Beiträge {day_lbl}.</div>'
-else:
-    crit_txt = ("<b style='color:%s'>Keine Kritik</b> – keine negativen Beiträge." % POS if neg_d.empty else
-                "<b style='color:%s'>%d kritische(r) Beitrag/Beiträge</b>: " % (NEG, len(neg_d)) +
-                "; ".join(f'<a href="{r.url}" target="_blank">{escape(r.author)}</a> – {escape(r.summary)}' for r in neg_d.itertuples()))
-    neu_txt = f" {len(neu_d)} neutral/abwägend." if len(neu_d) else ""
-    hl = "".join(f'<li><a href="{r.url}" target="_blank">{escape(r.author)}</a> · {escape(r.summary)}'
-                 f'{f" <span class=es-m>({r.likes} Reaktionen)</span>" if r.likes else ""}</li>' for r in top_d.itertuples())
-    themes = ", ".join(escape(t) for t in th_d.index) or "–"
-    es_body = f"""
-<div class="es-head">{nd} {"neuer Beitrag" if nd == 1 else "neue Beiträge"} {day_lbl} von {dd['author'].nunique()} {"Absender" if dd['author'].nunique() == 1 else "Absendern"} <span class="es-m">· {delta}</span></div>
-<div class="es-grid">
-  <div><div class="es-k">Stimmung</div><div>{crit_txt}{neu_txt}</div></div>
-  <div><div class="es-k">Wer spricht</div><div>{_cnt('Aussteller')} Aussteller · {_cnt('Speaker')} Speaker · {_cnt('Vorfreude')} Besucher/Netzwerk · {own_d} eigene FI-Kanäle</div></div>
-  <div><div class="es-k">Top-Themen</div><div>{themes}</div></div>
-</div>
-<div class="es-k" style="margin-top:12px">Highlights</div><ul class="es-list">{hl}</ul>"""
-st.markdown(f'<div class="es-card">{es_body}<div class="es-foot">Automatisch erstellt aus den geprüften Beiträgen · Gesamtstand {n} Beiträge · Datenstand {fmt_dt(verified)}</div></div>',
-            unsafe_allow_html=True)
+# ---------- Menü ----------
+page = st.segmented_control("Ansicht", ["Dashboard", "Executive Summary"], default="Dashboard",
+                            key="page", label_visibility="collapsed") or "Dashboard"
+if page == "Executive Summary":
+    WD = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+    _today = datetime.now(TZ).date()
+    _dates = df["created_at"].dt.tz_convert(TZ).dt.date
+    _opts = [_today - pd.Timedelta(days=i) for i in range(0, 10)]
+    _opts = [d.date() if hasattr(d, "date") else d for d in _opts]
+    es_l, es_r = st.columns([3, 1])
+    with es_l:
+        st.markdown('<div class="section" style="margin-top:6px">Executive Summary · Tagesbericht</div>', unsafe_allow_html=True)
+    with es_r:
+        sel_day = st.selectbox("Tag", _opts, index=0, label_visibility="collapsed",
+                               format_func=lambda d: ("Heute, " if d == _today else "") + f"{WD[d.weekday()]} {d:%d.%m.%Y}")
+    dd = df[_dates == sel_day]
+    prev = df[_dates == (sel_day - pd.Timedelta(days=1))]
+    nd, npv = len(dd), len(prev)
+    delta = ("gleich viele wie am Vortag" if nd == npv else
+             f"{'+' if nd > npv else '–'}{abs(nd - npv)} ggü. Vortag ({npv})")
+    neg_d = dd[dd["sentiment"] == "negative"]
+    neu_d = dd[dd["sentiment"] == "neutral"]
+    own_d = int(dd["own"].sum())
+    cat_d = dd["category"].value_counts()
+    def _cnt(prefix):
+        return int(cat_d[[c for c in cat_d.index if c.startswith(prefix)]].sum()) if len(cat_d) else 0
+    th_d = pd.Series([t for ts in dd["themes"] for t in ts]).value_counts().head(3)
+    top_d = dd.sort_values(["likes", "comments"], ascending=False).head(3)
+    day_lbl = ("heute" if sel_day == _today else f"am {WD[sel_day.weekday()]} {sel_day:%d.%m.}")
+    if nd == 0:
+        es_body = f'<div class="es-head">Keine neuen Beiträge {day_lbl}.</div>'
+    else:
+        crit_txt = ("<b style='color:%s'>Keine Kritik</b> – keine negativen Beiträge." % POS if neg_d.empty else
+                    "<b style='color:%s'>%d kritische(r) Beitrag/Beiträge</b>: " % (NEG, len(neg_d)) +
+                    "; ".join(f'<a href="{r.url}" target="_blank">{escape(r.author)}</a> – {escape(r.summary)}' for r in neg_d.itertuples()))
+        neu_txt = f" {len(neu_d)} neutral/abwägend." if len(neu_d) else ""
+        hl = "".join(f'<li><a href="{r.url}" target="_blank">{escape(r.author)}</a> · {escape(r.summary)}'
+                     f'{f" <span class=es-m>({r.likes} Reaktionen)</span>" if r.likes else ""}</li>' for r in top_d.itertuples())
+        themes = ", ".join(escape(t) for t in th_d.index) or "–"
+        es_body = f"""
+    <div class="es-head">{nd} {"neuer Beitrag" if nd == 1 else "neue Beiträge"} {day_lbl} von {dd['author'].nunique()} {"Absender" if dd['author'].nunique() == 1 else "Absendern"} <span class="es-m">· {delta}</span></div>
+    <div class="es-grid">
+      <div><div class="es-k">Stimmung</div><div>{crit_txt}{neu_txt}</div></div>
+      <div><div class="es-k">Wer spricht</div><div>{_cnt('Aussteller')} Aussteller · {_cnt('Speaker')} Speaker · {_cnt('Vorfreude')} Besucher/Netzwerk · {own_d} eigene FI-Kanäle</div></div>
+      <div><div class="es-k">Top-Themen</div><div>{themes}</div></div>
+    </div>
+    <div class="es-k" style="margin-top:12px">Highlights</div><ul class="es-list">{hl}</ul>"""
+    st.markdown(f'<div class="es-card">{es_body}<div class="es-foot">Automatisch erstellt aus den geprüften Beiträgen · Gesamtstand {n} Beiträge · Datenstand {fmt_dt(verified)}</div></div>',
+                unsafe_allow_html=True)
+    st.stop()
 
 # ---------- KPIs ----------
 st.markdown(f"""
