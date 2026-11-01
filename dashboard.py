@@ -79,6 +79,15 @@ html, body, [class*="css"], .stApp {{ font-family: 'Inter', sans-serif; }}
 .hnav a {{ color:rgba(255,255,255,.75) !important; text-decoration:none !important; font-weight:600; font-size:14px; padding-bottom:3px; border-bottom:2px solid transparent; }}
 .hnav a:hover {{ color:#fff !important; }}
 .hnav a.on {{ color:#fff !important; border-bottom-color:#fff; }}
+.hnav-space {{ height: 30px; }}
+.st-key-hnav {{ margin-top: -66px; margin-bottom: 30px; padding-left: 32px; position: relative; z-index: 5; }}
+.st-key-hnav [data-testid="stHorizontalBlock"] {{ gap: 18px !important; }}
+.st-key-hnav [data-testid="stColumn"] {{ width: auto !important; flex: 0 0 auto !important; min-width: 0 !important; }}
+.st-key-hnav button {{ background: transparent !important; border: none !important; padding: 0 !important; min-height: 0 !important; }}
+.st-key-hnav button p {{ color: rgba(255,255,255,.75) !important; font-weight: 600 !important; font-size: 14px !important; white-space: nowrap; }}
+.st-key-hnav button:hover p {{ color: #fff !important; }}
+.card, .card div, .card span {{ color: {INK}; }}
+.card .cap {{ color: {MUTED} !important; }}
 .kpis {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 18px 0 8px; }}
 @media (max-width: 900px) {{ .kpis {{ grid-template-columns: repeat(2, 1fr); }} .hero .right {{ text-align: left; }} }}
 .kpi {{ background: #fff; border: 1px solid {LINE}; border-radius: 14px; padding: 16px 18px; }}
@@ -214,9 +223,10 @@ verified = pd.Timestamp(VERIFIED_AT)
 _logo = Path(__file__).with_name("fi_logo.png")
 LOGO_IMG = (f'<img src="data:image/png;base64,{base64.b64encode(_logo.read_bytes()).decode()}" alt="Finanz Informatik">'
             if _logo.exists() else "")
-page = "Executive Summary" if st.query_params.get("view") == "summary" else "Dashboard"
-_nav = (f'<div class="hnav"><a href="?view=dashboard" target="_top" class="{"on" if page == "Dashboard" else ""}">Dashboard</a>'
-        f'<a href="?view=summary" target="_top" class="{"on" if page != "Dashboard" else ""}">Executive Summary</a></div>')
+if "page" not in st.session_state:
+    st.session_state.page = "Executive Summary" if st.query_params.get("view") == "summary" else "Dashboard"
+page = st.session_state.page
+_nav = '<div class="hnav-space"></div>'
 # ---------- Hero ----------
 if days_left > 0:
     countdown = f'{days_left}<small> Tage bis Eventstart</small>'
@@ -240,6 +250,15 @@ st.markdown(f"""
   </div>
 </div>
 """, unsafe_allow_html=True)
+def _go(p):
+    st.session_state.page = p
+with st.container(key="hnav"):
+    _b1, _b2, _ = st.columns([0.09, 0.14, 0.77], gap="small")
+    _b1.button("Dashboard", key="nav_dash", on_click=_go, args=("Dashboard",), type="tertiary")
+    _b2.button("Executive Summary", key="nav_sum", on_click=_go, args=("Executive Summary",), type="tertiary")
+_active = "nav_dash" if page == "Dashboard" else "nav_sum"
+st.markdown(f"<style>.st-key-{_active} button p {{ color:#fff !important; border-bottom:2px solid #fff; padding-bottom:2px; }}</style>", unsafe_allow_html=True)
+
 
 # ---------- Menü (im roten Kopf) ----------
 if page == "Executive Summary":
