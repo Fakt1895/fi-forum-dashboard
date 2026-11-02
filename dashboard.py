@@ -514,7 +514,11 @@ with t2:
 
 # ---------- Feed ----------
 st.markdown('<div class="section">Alle Beiträge</div>', unsafe_allow_html=True)
-f0, f1, f2, f3 = st.columns([1, 1, 1, 1])
+fp, f0, f1, f2, f3 = st.columns([1, 1, 1, 1, 1])
+with fp:
+    _pc = df["source"].value_counts()
+    plat_sel = st.selectbox("Plattform", ["Alle"] + [p for p in ["LinkedIn", "Instagram", "Facebook", "TikTok", "X", "News"] if p in _pc],
+                            format_func=lambda p: p if p == "Alle" else f"{p} ({_pc[p]})")
 with f0:
     own_sel = st.selectbox("Absender", ["Alle", "Eigene FI-Kanäle", "Externe Stimmen"])
 with f1:
@@ -526,6 +530,8 @@ with f3:
     sort_sel = st.selectbox("Sortierung", ["Neueste zuerst", "Meiste Reaktionen"])
 
 view = df.copy()
+if plat_sel != "Alle":
+    view = view[view["source"] == plat_sel]
 if own_sel != "Alle":
     view = view[view["own"] == (own_sel == "Eigene FI-Kanäle")]
 if sent_map[sent_sel]:
