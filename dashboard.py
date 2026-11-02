@@ -88,6 +88,23 @@ html, body, [class*="css"], .stApp {{ font-family: 'Inter', sans-serif; }}
 .st-key-hnav button:hover p {{ color: #fff !important; }}
 .card, .card div, .card span {{ color: {INK}; }}
 .card .cap {{ color: {MUTED} !important; }}
+.es-top {{ display:flex; justify-content:space-between; gap:20px; align-items:flex-start; margin-bottom:16px; }}
+.es-lead {{ font-size:18px; font-weight:700; line-height:1.4; max-width:720px; }}
+.amp {{ border:1.5px solid; border-radius:10px; padding:8px 12px; font-weight:800; font-size:14px; white-space:nowrap; display:flex; flex-direction:column; gap:2px; }}
+.amp span {{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; }}
+.amp small {{ font-weight:500; font-size:11.5px; color:{MUTED}; white-space:normal; max-width:220px; }}
+.ek-grid {{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }}
+.ek {{ background:#FAFAFB; border:1px solid {LINE}; border-radius:12px; padding:12px 14px; }}
+.ek-l {{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:{MUTED}; }}
+.ek-v {{ font-size:26px; font-weight:800; margin-top:2px; }}
+.ek-t {{ font-size:12.5px; font-weight:700; }} .ek-t.up {{ color:{POS}; }} .ek-t.down {{ color:{NEG}; }} .ek-t.flat {{ color:{MUTED}; }}
+.ek-s {{ font-size:11.5px; color:{MUTED}; }}
+.es-two {{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }}
+.ed-row {{ display:grid; grid-template-columns:140px 1fr 44px; gap:10px; align-items:center; font-size:13.5px; margin:5px 0; }}
+.ed-bar {{ height:8px; background:#F1F1F3; border-radius:4px; overflow:hidden; }} .ed-bar i {{ display:block; height:100%; background:{RED}; }}
+.tag {{ font-size:11px; font-weight:700; padding:1px 7px; border-radius:6px; }} .tag.neg {{ background:#FDE7E8; color:{NEG}; }} .tag.neu {{ background:#F1F1F3; color:{MUTED}; }}
+.es-cum {{ margin-top:16px; padding-top:12px; border-top:1px solid {LINE}; font-size:13.5px; }}
+@media (max-width: 900px) {{ .ek-grid {{ grid-template-columns:1fr 1fr; }} .es-two {{ grid-template-columns:1fr; }} .es-top {{ flex-direction:column; }} }}
 .kpis {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 18px 0 8px; }}
 @media (max-width: 900px) {{ .kpis {{ grid-template-columns: repeat(2, 1fr); }} .hero .right {{ text-align: left; }} }}
 .kpi {{ background: #fff; border: 1px solid {LINE}; border-radius: 14px; padding: 16px 18px; }}
@@ -275,38 +292,82 @@ if page == "Executive Summary":
                                format_func=lambda d: ("Heute, " if d == _today else "") + f"{WD[d.weekday()]} {d:%d.%m.%Y}")
     dd = df[_dates == sel_day]
     prev = df[_dates == (sel_day - pd.Timedelta(days=1))]
+    upto = df[_dates <= sel_day]
     nd, npv = len(dd), len(prev)
-    delta = ("gleich viele wie am Vortag" if nd == npv else
-             f"{'+' if nd > npv else '–'}{abs(nd - npv)} ggü. Vortag ({npv})")
+    rd, rpv = int(dd["likes"].sum()), int(prev["likes"].sum())
+    def _trend(a, b):
+        if b == 0:
+            return "neu" if a else "±0"
+        p = round(100 * (a - b) / b)
+        return f"{'+' if p >= 0 else '–'}{abs(p)} %"
+    def _tcls(a, b):
+        return "up" if a > b else ("down" if a < b else "flat")
     neg_d = dd[dd["sentiment"] == "negative"]
     neu_d = dd[dd["sentiment"] == "neutral"]
-    own_d = int(dd["own"].sum())
-    cat_d = dd["category"].value_counts()
-    def _cnt(prefix):
-        return int(cat_d[[c for c in cat_d.index if c.startswith(prefix)]].sum()) if len(cat_d) else 0
-    th_d = pd.Series([t for ts in dd["themes"] for t in ts]).value_counts().head(3)
-    top_d = dd.sort_values(["likes", "comments"], ascending=False).head(3)
-    day_lbl = ("heute" if sel_day == _today else f"am {WD[sel_day.weekday()]} {sel_day:%d.%m.}")
-    if nd == 0:
-        es_body = f'<div class="es-head">Keine neuen Beiträge {day_lbl}.</div>'
+    pos_d = round(100 * (dd["sentiment"] == "positive").mean()) if nd else 0
+    ext_share = round(100 * (~dd["own"]).mean()) if nd else 0
+    first_authors = set(dd["author"]) - set(df[_dates < sel_day]["author"])
+    # Ampel
+    if len(neg_d):
+        amp, amp_c, amp_t = "Rot", NEG, f"{len(neg_d)} kritische(r) Beitrag/Beiträge – Handlungsbedarf prüfen"
+    elif nd and len(neu_d) / nd > 0.15:
+        amp, amp_c, amp_t = "Gelb", "#D89614", "keine Kritik, aber erhöhter Anteil abwägender Stimmen"
     else:
-        crit_txt = ("<b style='color:%s'>Keine Kritik</b> – keine negativen Beiträge." % POS if neg_d.empty else
-                    "<b style='color:%s'>%d kritische(r) Beitrag/Beiträge</b>: " % (NEG, len(neg_d)) +
-                    "; ".join(f'<a href="{r.url}" target="_blank">{escape(r.author)}</a> – {escape(r.summary)}' for r in neg_d.itertuples()))
-        neu_txt = f" {len(neu_d)} neutral/abwägend." if len(neu_d) else ""
-        hl = "".join(f'<li><a href="{r.url}" target="_blank">{escape(r.author)}</a> · {escape(r.summary)}'
-                     f'{f" <span class=es-m>({r.likes} Reaktionen)</span>" if r.likes else ""}</li>' for r in top_d.itertuples())
-        themes = ", ".join(escape(t) for t in th_d.index) or "–"
-        es_body = f"""
-    <div class="es-head">{nd} {"neuer Beitrag" if nd == 1 else "neue Beiträge"} {day_lbl} von {dd['author'].nunique()} {"Absender" if dd['author'].nunique() == 1 else "Absendern"} <span class="es-m">· {delta}</span></div>
-    <div class="es-grid">
-      <div><div class="es-k">Stimmung</div><div>{crit_txt}{neu_txt}</div></div>
-      <div><div class="es-k">Wer spricht</div><div>{_cnt('Aussteller')} Aussteller · {_cnt('Speaker')} Speaker · {_cnt('Vorfreude')} Besucher/Netzwerk · {own_d} eigene FI-Kanäle</div></div>
-      <div><div class="es-k">Top-Themen</div><div>{themes}</div></div>
-    </div>
-    <div class="es-k" style="margin-top:12px">Highlights</div><ul class="es-list">{hl}</ul>"""
-    st.markdown(f'<div class="es-card">{es_body}<div class="es-foot">Automatisch erstellt aus den geprüften Beiträgen · Gesamtstand {n} Beiträge · Datenstand {fmt_dt(verified)}</div></div>',
-                unsafe_allow_html=True)
+        amp, amp_c, amp_t = "Grün", POS, "keine Kritik, Resonanz positiv"
+    day_lbl = "heute" if sel_day == _today else f"am {WD[sel_day.weekday()]}, {sel_day:%d.%m.}"
+    # Kernaussage
+    if nd == 0:
+        lead = f"Keine neuen öffentlichen Beiträge {day_lbl}."
+    else:
+        move = ("deutlich mehr" if nd > npv * 1.3 else "weniger" if nd < npv * 0.7 else "ähnlich viel")
+        lead = (f"{day_lbl.capitalize()} {nd} {'neuer Beitrag' if nd == 1 else 'neue Beiträge'} zum FI-Forum – "
+                f"{move} Resonanz als am Vortag. Stimmung {pos_d} % positiv, "
+                + ("keine Kritik." if neg_d.empty else f"{len(neg_d)} kritische Stimme(n)."))
+    # KPI strip
+    def _kpi(lbl, val, tr, cls, sub):
+        return (f'<div class="ek"><div class="ek-l">{lbl}</div><div class="ek-v">{val}</div>'
+                f'<div class="ek-t {cls}">{tr}</div><div class="ek-s">{sub}</div></div>')
+    kpis = "".join([
+        _kpi("Beiträge", nd, _trend(nd, npv), _tcls(nd, npv), f"Vortag {npv}"),
+        _kpi("Reaktionen", f"{rd:,}".replace(",", "."), _trend(rd, rpv), _tcls(rd, rpv), f"Vortag {rpv:,}".replace(",", ".")),
+        _kpi("Absender", dd["author"].nunique(), f"{len(first_authors)} erstmals", "flat", "verschiedene Personen/Firmen"),
+        _kpi("Externe Stimmen", f"{ext_share} %", f"{int(dd['own'].sum())} eigene FI-Posts", "flat", "Aussteller, Speaker, Gäste"),
+    ])
+    # Treiber
+    th = pd.Series([t for ts in dd["themes"] for t in ts]).value_counts()
+    drivers = "".join(f'<div class="ed-row"><span>{escape(t)}</span><span class="ed-bar"><i style="width:{round(100*c/max(nd,1))}%"></i></span><b>{round(100*c/max(nd,1))} %</b></div>'
+                      for t, c in th.head(4).items()) or '<div class="es-m">–</div>'
+    # Stimmen
+    top = dd.sort_values(["likes", "comments"], ascending=False).head(3)
+    voices = "".join(f'<li><a href="{r.url}" target="_blank">{escape(r.author)}</a>'
+                     f'{" · " + escape(r.author_title) if r.author_title else ""}<br><span class="es-m">{escape(r.summary)}'
+                     f'{f" · {r.likes} Reaktionen" if r.likes else ""}</span></li>' for r in top.itertuples()) or "<li class='es-m'>–</li>"
+    # Beobachtung
+    watch = pd.concat([neg_d, neu_d])
+    watch_html = ("".join(f'<li><span class="tag {"neg" if r.sentiment == "negative" else "neu"}">{"kritisch" if r.sentiment == "negative" else "abwägend"}</span> '
+                          f'<a href="{r.url}" target="_blank">{escape(r.author)}</a>: {escape(r.summary)}</li>' for r in watch.itertuples())
+                  or '<li class="es-m">Keine kritischen oder abwägenden Beiträge.</li>')
+    # Kanäle
+    ch = dd["source"].value_counts()
+    chan = " · ".join(f"{k} {v}" for k, v in ch.items()) or "–"
+    # Kumuliert
+    last7 = df[(_dates <= sel_day) & (_dates > sel_day - pd.Timedelta(days=7))]
+    cum = (f"Seit Beginn der Erfassung: <b>{len(upto)}</b> Beiträge von <b>{upto['author'].nunique()}</b> Absendern, "
+           f"<b>{int(upto['likes'].sum()):,}</b> Reaktionen. Ø der letzten 7 Tage: <b>{round(len(last7)/7)}</b> Beiträge pro Tag.").replace(",", ".")
+    st.markdown(f"""
+<div class="es-card">
+  <div class="es-top"><div class="es-lead">{lead}</div>
+    <div class="amp" style="border-color:{amp_c};color:{amp_c}"><span style="background:{amp_c}"></span>Reputation: {amp}<small>{amp_t}</small></div></div>
+  <div class="ek-grid">{kpis}</div>
+  <div class="es-two">
+    <div><div class="es-k">Treiber der Diskussion</div>{drivers}</div>
+    <div><div class="es-k">Reichweitenstärkste Stimmen</div><ul class="es-list">{voices}</ul></div>
+  </div>
+  <div class="es-k" style="margin-top:14px">Beobachtungspunkte</div><ul class="es-list">{watch_html}</ul>
+  <div class="es-k" style="margin-top:14px">Kanäle {day_lbl}</div><div>{chan}</div>
+  <div class="es-cum">{cum}</div>
+  <div class="es-foot">Automatisch erstellt aus einzeln geprüften Beiträgen mit Originallink · Datenstand {fmt_dt(verified)}</div>
+</div>""", unsafe_allow_html=True)
     st.stop()
 
 # ---------- KPIs ----------
