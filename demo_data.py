@@ -12,9 +12,11 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-11-04T07:07:37Z"
+VERIFIED_AT = "2026-11-04T07:09:28Z"
 
 DEMO_MENTIONS = [
+    {'id': 'li_7523435484522512384', 'author': 'Matthias Burg', 'author_title': 'Sparkasse Rhein-Nahe', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/posts/matthias-burg-730aa5122_fiforum-finanziellebildung-financeandfriends-ugcPost-7523435484522512384-W727/', 'text': 'FI-Forum: Impulse, Begegnungen und eine kleine Spende. Ein intensiver und inspirierender Tag auf dem FI-Forum der Finanz Informatik liegt hinter mir.', 'created_at': '2026-11-03T17:26:38Z', 'likes': 0, 'comments': 0, 'category': 'Vorfreude / Networking', 'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low', 'summary': 'Positives Fazit zu Tag 1, Spende für finanzielle Bildung.', 'themes': ['Fazit Tag 1', 'Finanzbildung'], 'verified': True},
+    {'id': 'li_7523640190116990976', 'author': 'S-Kreditpartner', 'author_title': 'Unternehmen', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/posts/teamskp-teamsparkasse-evs-share-7523640190116990976-k0tw/', 'text': 'Wie lässt sich Kreditgeschäft ausbauen, ohne in der Sparkasse zusätzliche Kapazitäten zu binden? Genau hier setzt der Ergänzende Vertriebsservice Sparkasse (EVS) an.', 'created_at': '2026-11-04T07:00:03Z', 'likes': 0, 'comments': 0, 'category': 'Aussteller / Teilnahme', 'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low', 'summary': 'EVS als Standthema.', 'themes': ['Kredit', 'Vertrieb'], 'verified': True},
     {'id': 'li_7523637404424007680',
      'author': 'S-FiF | Frauen in Führung',
      'author_title': 'Netzwerk der Sparkassen-Finanzgruppe',
