@@ -12,7 +12,7 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-11-04T18:34:19Z"
+VERIFIED_AT = "2026-11-04T18:35:44Z"
 
 DEMO_MENTIONS = [
     {'id': 'li_7523802831783391232', 'author': 'Johannes Rauh, CFA', 'author_title': 'Partner, Deloitte Deutschland (Financial Services)', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/posts/johannes-rauh-cfa-b678a614a_fi-sparkassen-deloitte-share-7523802831783391232-KSy2/', 'text': 'Vielen Dank für die guten Gespräche! Das #FI Forum hat für mich wieder die Relevanz des persönlichen Austauschs gezeigt. Und die gesamte Leistungsbreite der #Sparkassen und ihrer Dienstleister … #Deloitte als Partner für #Sparkassen – wir sagen Danke!', 'created_at': '2026-11-04T17:46:20Z', 'likes': 6, 'comments': 1, 'category': 'Aussteller / Teilnahme', 'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low', 'summary': 'Deloitte-Partner: Dank für Gespräche, Leistungsbreite der Sparkassen.', 'themes': ['Networking', 'Deloitte'], 'verified': True},
