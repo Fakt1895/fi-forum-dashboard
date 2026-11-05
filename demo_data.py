@@ -12,7 +12,7 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-11-05T12:48:05Z"
+VERIFIED_AT = "2026-11-05T12:53:30Z"
 
 DEMO_MENTIONS = [
     {'id': 'li_7524087295986192385', 'author': 'Florian Poltrock', 'author_title': 'Account Executive, Snowflake', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/posts/florianpoltrock_fi-ugcPost-7524087295986192385-Iu5B/', 'text': 'Inspirierende Tage beim #FI-Forum in Frankfurt. Am meisten bleibt mir die Atmosphäre in Erinnerung. Der Austausch war unkompliziert, familiär, auf Augenhöhe … Inhaltlich war mein Highlight Philipp Klöckners Vortrag. „Die Erben sind schon in der App“ … Und der Quantencomputer auf der Ausstellungsfläche hat gezeigt, wie spannend die Zukunft im Banking wird …', 'created_at': '2026-11-05T12:36:42Z', 'likes': 0, 'comments': 0, 'category': 'Vorfreude / Networking', 'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low', 'summary': 'Snowflake: familiäre Atmosphäre, Highlight Klöckner-Vortrag, Quantencomputer.', 'themes': ['Networking', 'KI', 'Quantencomputing'], 'verified': True},
