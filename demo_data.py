@@ -12,7 +12,7 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-11-05T06:04:42Z"
+VERIFIED_AT = "2026-11-05T06:28:42Z"
 
 DEMO_MENTIONS = [
     {'id': 'li_7523983174733828096', 'author': 'S-FiF | Frauen in Führung', 'author_title': 'Netzwerk', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/posts/das-war-tag-2-auf-dem-fi-forum-2026-und-ugcPost-7523983174733828096-ijv9/', 'text': 'Das war Tag 2 auf dem FI-Forum 2026 – und auch wir waren wieder aktiv mit dabei! In einer spannenden Paneldiskussion zum Thema „Heimvorteil Kundennähe: Wie Sparkassen den Privatkundenvertrieb …“', 'created_at': '2026-11-05T05:42:57Z', 'likes': 0, 'comments': 0, 'category': 'Speaker / Vortrag', 'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low', 'summary': 'Paneldiskussion „Heimvorteil Kundennähe“ an Tag 2.', 'themes': ['Heimvorteil', 'Privatkunden'], 'verified': True},
