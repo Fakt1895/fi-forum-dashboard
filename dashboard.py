@@ -241,7 +241,7 @@ _logo = Path(__file__).with_name("fi_logo.png")
 LOGO_IMG = (f'<img src="data:image/png;base64,{base64.b64encode(_logo.read_bytes()).decode()}" alt="Finanz Informatik">'
             if _logo.exists() else "")
 if "page" not in st.session_state:
-    st.session_state.page = "Executive Summary" if st.query_params.get("view") == "summary" else "Dashboard"
+    st.session_state.page = {"summary": "Executive Summary", "bilanz": "Gesamtbilanz"}.get(st.query_params.get("view"), "Dashboard")
 page = st.session_state.page
 _nav = '<div class="hnav-space"></div>'
 # ---------- Hero ----------
@@ -270,10 +270,11 @@ st.markdown(f"""
 def _go(p):
     st.session_state.page = p
 with st.container(key="hnav"):
-    _b1, _b2, _ = st.columns([0.09, 0.14, 0.77], gap="small")
+    _b1, _b2, _b3, _ = st.columns([0.09, 0.14, 0.12, 0.65], gap="small")
     _b1.button("Dashboard", key="nav_dash", on_click=_go, args=("Dashboard",), type="tertiary")
     _b2.button("Executive Summary", key="nav_sum", on_click=_go, args=("Executive Summary",), type="tertiary")
-_active = "nav_dash" if page == "Dashboard" else "nav_sum"
+    _b3.button("Gesamtbilanz", key="nav_total", on_click=_go, args=("Gesamtbilanz",), type="tertiary")
+_active = {"Dashboard": "nav_dash", "Executive Summary": "nav_sum", "Gesamtbilanz": "nav_total"}[page]
 st.markdown(f"<style>.st-key-{_active} button p {{ color:#fff !important; border-bottom:2px solid #fff; padding-bottom:2px; }}</style>", unsafe_allow_html=True)
 
 
@@ -367,6 +368,93 @@ if page == "Executive Summary":
   <div class="es-k" style="margin-top:14px">Kanäle {day_lbl}</div><div>{chan}</div>
   <div class="es-cum">{cum}</div>
   <div class="es-foot">Automatisch erstellt aus einzeln geprüften Beiträgen mit Originallink · Datenstand {fmt_dt(verified)}</div>
+</div>""", unsafe_allow_html=True)
+    st.stop()
+
+# ---------- Gesamtbilanz ----------
+if page == "Gesamtbilanz":
+    WD = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+    _d = df["created_at"].dt.tz_convert(TZ).dt.date
+    MESSE = (date(2026, 11, 3), date(2026, 11, 5))
+    st.markdown('<div class="section" style="margin-top:6px">Gesamtbilanz · gesamter Erfassungszeitraum</div>', unsafe_allow_html=True)
+    first, last = _d.min(), _d.max()
+    n_ext = int((~df["own"]).sum())
+    ext_share = round(100 * n_ext / n) if n else 0
+    neg_all = df[df["sentiment"] == "negative"]
+    neu_all = df[df["sentiment"] == "neutral"]
+    if len(neg_all):
+        amp, amp_c, amp_t = "Rot", NEG, f"{len(neg_all)} kritische(r) Beitrag/Beiträge im Gesamtzeitraum"
+    elif n and len(neu_all) / n > 0.15:
+        amp, amp_c, amp_t = "Gelb", "#D89614", "keine Kritik, aber erhöhter Anteil abwägender Stimmen"
+    else:
+        amp, amp_c, amp_t = "Grün", POS, "keine Kritik im gesamten Zeitraum"
+    # Phasen
+    phases = [
+        ("Vorlauf", f"bis {MESSE[0] - pd.Timedelta(days=1):%d.%m.}", df[_d < MESSE[0]]),
+        ("Messetage", f"{MESSE[0]:%d.}–{MESSE[1]:%d.%m.}", df[(_d >= MESSE[0]) & (_d <= MESSE[1])]),
+        ("Nachlauf", f"ab {MESSE[1] + pd.Timedelta(days=1):%d.%m.}", df[_d > MESSE[1]]),
+    ]
+    per_day = _d.value_counts()
+    peak_day, peak_n = per_day.idxmax(), int(per_day.max())
+    messe_n = len(phases[1][2])
+    lead = (f"{n:,} verifizierte Beiträge von {authors:,} Absendern zum FI-Forum 2026 – "
+            f"{reactions:,} Reaktionen und {comments:,} Kommentare. "
+            f"{round(100 * messe_n / n) if n else 0} % der Beiträge entstanden an den drei Messetagen, "
+            f"Spitzentag war {WD[peak_day.weekday()]}, {peak_day:%d.%m.} mit {peak_n} Beiträgen. "
+            + ("Keine kritischen Stimmen." if neg_all.empty else f"{len(neg_all)} kritische Stimme(n).")).replace(",", ".")
+    def _kpi(lbl, val, sub, sub2=""):
+        return (f'<div class="ek"><div class="ek-l">{lbl}</div><div class="ek-v">{val}</div>'
+                f'<div class="ek-t flat">{sub}</div><div class="ek-s">{sub2}</div></div>')
+    kpis = "".join([
+        _kpi("Beiträge", f"{n:,}".replace(",", "."), f"{first:%d.%m.} – {last:%d.%m.%Y}", "verifiziert, mit Originallink"),
+        _kpi("Reaktionen", f"{reactions:,}".replace(",", "."), f"{comments:,} Kommentare".replace(",", "."), f"Ø {round(reactions / n) if n else 0} je Beitrag"),
+        _kpi("Absender", f"{authors:,}".replace(",", "."), f"{df[df['own']]['author'].nunique()} eigene FI-Kanäle", "Personen, Firmen, Medien"),
+        _kpi("Externe Stimmen", f"{ext_share} %", f"{int(df['own'].sum())} eigene FI-Posts", "Aussteller, Speaker, Gäste, Presse"),
+    ])
+    def _bars(series, total):
+        return "".join(f'<div class="ed-row"><span>{escape(str(k))}</span><span class="ed-bar"><i style="width:{round(100 * v / max(total, 1))}%"></i></span><b>{v}</b></div>'
+                       for k, v in series.items()) or '<div class="es-m">–</div>'
+    phase_rows = "".join(
+        f'<div class="ed-row"><span>{lbl} <span class="es-m">{rng}</span></span><span class="ed-bar"><i style="width:{round(100 * len(sub) / max(n, 1))}%"></i></span><b>{len(sub)}</b></div>'
+        for lbl, rng, sub in phases)
+    phase_note = " · ".join(f"{lbl}: {int(sub['likes'].sum()):,} Reaktionen".replace(",", ".") for lbl, _r, sub in phases)
+    src_order = [p for p in ["LinkedIn", "Instagram", "Facebook", "TikTok", "X", "News"] if p in set(df["source"])]
+    src = df["source"].value_counts().reindex(src_order).fillna(0).astype(int)
+    cats = df["category"].value_counts()
+    themes = pd.Series([t for ts in df["themes"] for t in ts]).value_counts().head(8)
+    top = df.sort_values(["likes", "comments"], ascending=False).head(5)
+    voices = "".join(f'<li><a href="{r.url}" target="_blank">{escape(r.author)}</a> <span class="es-m">· {escape(r.source)} · {r.created_at.tz_convert(TZ):%d.%m.}</span><br>'
+                     f'<span class="es-m">{escape(r.summary)} · {r.likes:,} Reaktionen, {r.comments} Kommentare</span></li>'.replace(",", ".")
+                     for r in top.itertuples()) or "<li class='es-m'>–</li>"
+    ext_top = df[~df["own"]]["author"].value_counts().head(8)
+    senders = "".join(f'<div class="ed-row"><span>{escape(a)}</span><span class="ed-bar"><i style="width:{round(100 * c / max(int(ext_top.max()), 1))}%"></i></span><b>{c}</b></div>'
+                      for a, c in ext_top.items()) or '<div class="es-m">–</div>'
+    watch = pd.concat([neg_all, neu_all.sort_values("likes", ascending=False).head(5)])
+    watch_html = ("".join(f'<li><span class="tag {"neg" if r.sentiment == "negative" else "neu"}">{"kritisch" if r.sentiment == "negative" else "abwägend"}</span> '
+                          f'<a href="{r.url}" target="_blank">{escape(r.author)}</a>: {escape(r.summary)}</li>' for r in watch.itertuples())
+                  or '<li class="es-m">Keine kritischen oder abwägenden Beiträge.</li>')
+    neu_note = (f'<div class="es-m" style="margin-top:4px">{len(neu_all)} abwägende/rein informative Beiträge insgesamt, '
+                f'{len(neg_all)} kritische. Top 5 abwägende nach Reaktionen gelistet.</div>') if len(neu_all) else ""
+    n_fmt = f"{n:,}".replace(",", ".")
+    st.markdown(f"""
+<div class="es-card">
+  <div class="es-top"><div class="es-lead">{lead}</div>
+    <div class="amp" style="border-color:{amp_c};color:{amp_c}"><span style="background:{amp_c}"></span>Reputation: {amp}<small>{amp_t}</small></div></div>
+  <div class="ek-grid">{kpis}</div>
+  <div class="es-two">
+    <div><div class="es-k">Verlauf nach Phasen</div>{phase_rows}<div class="es-m" style="margin-top:6px">{phase_note}</div></div>
+    <div><div class="es-k">Kanäle</div>{_bars(src, n)}</div>
+  </div>
+  <div class="es-two" style="margin-top:16px">
+    <div><div class="es-k">Anlass der Beiträge</div>{_bars(cats, n)}</div>
+    <div><div class="es-k">Top-Themen</div>{_bars(themes, n)}</div>
+  </div>
+  <div class="es-two" style="margin-top:16px">
+    <div><div class="es-k">Reichweitenstärkste Beiträge</div><ul class="es-list">{voices}</ul></div>
+    <div><div class="es-k">Aktivste externe Absender</div>{senders}</div>
+  </div>
+  <div class="es-k" style="margin-top:14px">Beobachtungspunkte</div><ul class="es-list">{watch_html}</ul>{neu_note}
+  <div class="es-foot">Automatisch erstellt aus {n_fmt} einzeln geprüften Beiträgen mit Originallink · Erfassung abgeschlossen · Datenstand {fmt_dt(verified)}</div>
 </div>""", unsafe_allow_html=True)
     st.stop()
 
