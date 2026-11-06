@@ -12,7 +12,7 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-11-06T07:32:00Z"
+VERIFIED_AT = "2026-11-06T07:36:00Z"
 
 DEMO_MENTIONS = [
     {'id': 'li_7524367317523259392', 'author': 'Fincon Reply GmbH', 'author_title': 'Unternehmensseite', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/posts/fiforum-finconreply-share-7524367317523259392-Zg1l/', 'text': 'Mit Doris Bacci steht auch die Gewinnerin unserer Fotoaktion von Tag 3 auf dem FI-Forum 2026 fest. Herzlichen Glückwunsch noch einmal zum Gewinn der AirTags!', 'created_at': '2026-11-06T07:09:24Z', 'likes': 0, 'comments': 0, 'category': 'Aussteller / Teilnahme', 'sentiment': 'positive', 'confidence': 0.9, 'severity': 'low', 'summary': 'Fincon Reply gibt die Gewinnerin der Fotoaktion von Tag 3 bekannt.', 'themes': ['Gewinnspiel', 'Messestand'], 'verified': True},
