@@ -12,7 +12,7 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-11-06T15:03:00Z"
+VERIFIED_AT = "2026-11-06T15:05:00Z"
 
 DEMO_MENTIONS = [
     {'id': 'li_7524482308641402880', 'author': 'Timo Geuken', 'author_title': 'CEO thinformatics', 'source': 'LinkedIn', 'url': 'https://www.linkedin.com/posts/timo-geuken_fiforum2026-ki-sparkasse-ugcPost-7524482308641402880-vj1l/', 'text': 'Heimvorteil? Definitiv! 🏠 Zwei Tage an der Ausprobier-Station des S-KIPiloten … Besucher haben unsere Office Add-Ins selbst ausprobiert (Word, PowerPoint, Outlook) – alles mit der lokalen KI der FI. Die Finanz Informatik lag vor rund drei Jahren genau richtig mit ihrer Entscheidung, auf lokale LLMs zu setzen. … Well done, Finanz Informatik! … #FIForum2026 #KI #Sparkasse', 'created_at': '2026-11-06T14:46:20Z', 'likes': 1, 'comments': 0, 'category': 'Aussteller / Teilnahme', 'sentiment': 'positive', 'confidence': 0.95, 'severity': 'low', 'summary': 'thinformatics-CEO: S-KIPilot-Ausprobierstation, Lob für FI-Strategie lokaler LLMs.', 'themes': ['S-KIPilot', 'Lokale LLMs', 'Office Add-Ins'], 'verified': True},
