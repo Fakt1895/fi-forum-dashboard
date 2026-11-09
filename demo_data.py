@@ -12,7 +12,7 @@ Jeder Eintrag wurde am 22.10.2026 im Browser geöffnet und geprüft.
 import pandas as pd
 from collections import Counter
 
-VERIFIED_AT = "2026-11-06T17:42:00Z"
+VERIFIED_AT = "2026-11-09T12:44:00Z"
 
 DEMO_MENTIONS = [
     {'id': 'fb_shub_reel_1852996799167943', 'author': 'Sparkassen Innovation Hub', 'author_title': 'Facebook-Seite (Aussteller)', 'source': 'Facebook', 'url': 'https://www.facebook.com/reel/1852996799167943/', 'text': '3. und somit letzter Tag auf dem FI-Forum 🚀 Es war großartig! Danke an alle 😍 (Reel)', 'created_at': '2026-11-06T12:40:00Z', 'likes': 4, 'comments': 0, 'category': 'Aussteller / Teilnahme', 'sentiment': 'positive', 'confidence': 0.85, 'severity': 'low', 'summary': 'S-Hub-Reel zum letzten Messetag: Dank an alle.', 'themes': ['Sparkassen Innovation Hub', 'Messe-Impressionen'], 'verified': True},
